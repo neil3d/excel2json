@@ -24,8 +24,8 @@ Excel表单格式约定
 
 命令行参数
 ---------
- -e, --excel     Required. 输入的Excel文件路径.
- -j, --json      Required. 指定输出的json文件路径.
- -h, --header    Required. 表格中有几行是表头.
+ - -e, --excel     Required. 输入的Excel文件路径.
+ - -j, --json      Required. 指定输出的json文件路径.
+ - -h, --header    Required. 表格中有几行是表头.
 
 例如：“excel test.xlsx --json test.json --header 3”，其中的输入和输出文件，都在当前目录下；
