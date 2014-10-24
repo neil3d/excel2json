@@ -81,7 +81,7 @@ namespace excel2json
 
                 // 导出JSON
                 JsonExporter exporter = new JsonExporter(sheet, header);
-                exporter.SaveJsonToFile(jsonPath);
+                exporter.SaveJsonToFile(jsonPath, options.Encoding);
             }
         }
     }

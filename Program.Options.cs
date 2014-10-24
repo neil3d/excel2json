@@ -31,6 +31,13 @@ namespace excel2json
                 get;
                 set;
             }
+
+            [Option('c', "encoding", Required = false, DefaultValue="utf8-nobom", HelpText = "指定编码的名称.")]
+            public string Encoding
+            {
+                get;
+                set;
+            }
         }
     }
 }
