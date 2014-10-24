@@ -29,21 +29,18 @@ namespace excel2json
             m_data = new Dictionary<string, Dictionary<string, object>>();
 
             //--以第一列为ID，转换成ID->Object的字典
-            int i = 0;
-            foreach (DataRow row in sheet.Rows)
+            int firstDataRow = headerRows - 1;
+            for (int i = firstDataRow; i < sheet.Rows.Count; i++)
             {
-                if (i >= headerRows-1)
+                DataRow row = sheet.Rows[i];
+                var rowData = new Dictionary<string, object>();
+                foreach (DataColumn column in sheet.Columns)
                 {
-                    var rowData = new Dictionary<string, object>();
-                    foreach (DataColumn column in sheet.Columns)
-                    {
-                        rowData[column.ToString()] = row[column];
-                    }
-
-                    string ID = row[sheet.Columns[0]].ToString();
-                    m_data[ID] = rowData;
+                    rowData[column.ToString()] = row[column];
                 }
-                i++;
+
+                string ID = row[sheet.Columns[0]].ToString();
+                m_data[ID] = rowData;
             }
         }
 
@@ -51,7 +48,7 @@ namespace excel2json
         /// 将内部数据转换成Json文本，并保存至文件
         /// </summary>
         /// <param name="jsonPath">输出文件路径</param>
-        public void SaveJsonToFile(string jsonPath, Encoding encoding)
+        public void SaveToFile(string filePath, Encoding encoding)
         {
             if (m_data == null)
                 throw new Exception("JsonExporter内部数据为空。");
@@ -60,7 +57,7 @@ namespace excel2json
             string json = JsonConvert.SerializeObject(m_data, Formatting.Indented);
 
             //-- 保存文件
-            using (FileStream file = new FileStream(jsonPath, FileMode.Create, FileAccess.Write))
+            using (FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
                 using (TextWriter writer = new StreamWriter(file, encoding))
                     writer.Write(json);

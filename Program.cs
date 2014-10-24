@@ -40,9 +40,8 @@ namespace excel2json
             System.DateTime endTime = System.DateTime.Now;
             System.TimeSpan dur = endTime - startTime;
             Console.WriteLine(
-                string.Format("[{0}]\t=>\t[{1}]：转换完成[{2}毫秒].", 
+                string.Format("[{0}]：转换完成[{1}毫秒].",
                 Path.GetFileName(options.ExcelPath),
-                Path.GetFileName(options.JsonPath), 
                 dur.Milliseconds)
                 );
         }
@@ -54,7 +53,6 @@ namespace excel2json
         private static void Run(Options options)
         {
             string excelPath = options.ExcelPath;
-            string jsonPath = options.JsonPath;
             int header = options.HeaderRows;
 
             // 加载Excel文件
@@ -95,9 +93,19 @@ namespace excel2json
                     }
                 }
 
-                // 导出JSON
-                JsonExporter exporter = new JsonExporter(sheet, header);
-                exporter.SaveJsonToFile(jsonPath, cd);
+                //-- 导出JSON文件
+                if (options.JsonPath != null && options.JsonPath.Length > 0)
+                {
+                    JsonExporter exporter = new JsonExporter(sheet, header);
+                    exporter.SaveToFile(options.JsonPath, cd);
+                }
+
+                //-- 导出SQL文件
+                if (options.SQLPath != null && options.SQLPath.Length > 0)
+                {
+                    SQLExporter exporter = new SQLExporter(sheet, header);
+                    exporter.SaveToFile(options.SQLPath, cd);
+                }
             }
         }
     }

@@ -18,8 +18,15 @@ namespace excel2json
                 set;
             }
 
-            [Option('j', "json", Required = true, HelpText = "指定输出的json文件路径.")]
+            [Option('j', "json", Required = false, HelpText = "指定输出的json文件路径.")]
             public string JsonPath
+            {
+                get;
+                set;
+            }
+
+            [Option('s', "sql", Required = false, HelpText = "指定输出的SQL文件路径.")]
+            public string SQLPath
             {
                 get;
                 set;

@@ -58,6 +58,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Program.Options.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLExporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
