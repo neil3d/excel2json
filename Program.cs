@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Data;
+using System.Text;
 using Excel;
 
 namespace excel2json
@@ -79,9 +80,24 @@ namespace excel2json
                     throw new Exception("Excel Sheet中没有数据: " + excelPath);
                 }
 
+                //-- 确定编码
+                Encoding cd = new UTF8Encoding(false);
+                if (options.Encoding != "utf8-nobom")
+                {
+                    foreach (EncodingInfo ei in Encoding.GetEncodings())
+                    {
+                        Encoding e = ei.GetEncoding();
+                        if (e.EncodingName == options.Encoding)
+                        {
+                            cd = e;
+                            break;
+                        }
+                    }
+                }
+
                 // 导出JSON
                 JsonExporter exporter = new JsonExporter(sheet, header);
-                exporter.SaveJsonToFile(jsonPath, options.Encoding);
+                exporter.SaveJsonToFile(jsonPath, cd);
             }
         }
     }

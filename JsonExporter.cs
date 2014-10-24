@@ -51,25 +51,10 @@ namespace excel2json
         /// 将内部数据转换成Json文本，并保存至文件
         /// </summary>
         /// <param name="jsonPath">输出文件路径</param>
-        public void SaveJsonToFile(string jsonPath, string encoding)
+        public void SaveJsonToFile(string jsonPath, Encoding encoding)
         {
             if (m_data == null)
                 throw new Exception("JsonExporter内部数据为空。");
-
-            //-- 确定编码
-            Encoding cd = new UTF8Encoding(false);
-            if (encoding != "utf8-nobom")
-            {
-                foreach (EncodingInfo ei in Encoding.GetEncodings())
-                {
-                    Encoding e = ei.GetEncoding();
-                    if (e.EncodingName == encoding)
-                    {
-                        cd = e;
-                        break;
-                    }
-                }
-            }
 
             //-- 转换为JSON字符串
             string json = JsonConvert.SerializeObject(m_data, Formatting.Indented);
@@ -77,7 +62,7 @@ namespace excel2json
             //-- 保存文件
             using (FileStream file = new FileStream(jsonPath, FileMode.Create, FileAccess.Write))
             {
-                using (TextWriter writer = new StreamWriter(file, cd))
+                using (TextWriter writer = new StreamWriter(file, encoding))
                     writer.Write(json);
             }
         }
