@@ -40,7 +40,7 @@ namespace excel2json
             System.DateTime endTime = System.DateTime.Now;
             System.TimeSpan dur = endTime - startTime;
             Console.WriteLine(
-                string.Format("[{0}]：转换完成[{1}毫秒].",
+                string.Format("[{0}]：\t转换完成[{1}毫秒].",
                 Path.GetFileName(options.ExcelPath),
                 dur.Milliseconds)
                 );

@@ -71,8 +71,9 @@ namespace excel2json
                 sbValues.Clear();
                 foreach (DataColumn column in sheet.Columns)
                 {
-                    sbValues.Append(row[column].ToString());
-                    sbValues.Append(", ");
+                    if (sbValues.Length > 0)
+                        sbValues.Append(", ");
+                    sbValues.AppendFormat("'{0}'", row[column].ToString());
                 }
 
 #if false
@@ -103,7 +104,13 @@ namespace excel2json
             {
                 string filedName = column.ToString();
                 string filedType = typeRow[column].ToString();
-                sb.AppendFormat("`{0}` {1},", filedName, filedType);
+
+                if (filedType == "varchar")
+                    sb.AppendFormat("`{0}` {1}(64),", filedName, filedType);
+                else if (filedType == "text")
+                    sb.AppendFormat("`{0}` {1}(256),", filedName, filedType);
+                else
+                    sb.AppendFormat("`{0}` {1},", filedName, filedType);
             }
 
             sb.AppendFormat("PRIMARY KEY (`{0}`) ", sheet.Columns[0].ToString());
