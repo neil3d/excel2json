@@ -31,4 +31,4 @@ Excel表单格式约定
  - -h, --header      Required. 表格中有几行是表头.
  - -c, --encoding    (Default: utf8-nobom) 指定编码的名称.
 
-例如：“excel test.xlsx --json test.json --header 3”，其中的输入和输出文件，都在当前目录下；
+例如：“excel2json --excel test.xlsx --json test.json --header 3”，其中的输入和输出文件，都在当前目录下；
