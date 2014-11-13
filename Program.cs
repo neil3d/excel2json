@@ -106,6 +106,16 @@ namespace excel2json
                     SQLExporter exporter = new SQLExporter(sheet, header);
                     exporter.SaveToFile(options.SQLPath, cd);
                 }
+
+                //-- 生成C#定义文件
+                if (options.CSharpPath != null && options.CSharpPath.Length > 0)
+                {
+                    string excelName = Path.GetFileName(excelPath);
+
+                    CSDefineGenerator exporter = new CSDefineGenerator(sheet);
+                    exporter.ClassComment = string.Format("// Generate From {0}", excelName);
+                    exporter.SaveToFile(options.CSharpPath, cd);
+                }
             }
         }
     }

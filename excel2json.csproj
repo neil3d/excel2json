@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSDefineGenerator.cs" />
     <Compile Include="JsonExporter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Program.Options.cs" />

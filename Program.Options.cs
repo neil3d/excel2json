@@ -32,6 +32,13 @@ namespace excel2json
                 set;
             }
 
+            [Option('p', "csharp", Required = false, HelpText = "指定输出的C#数据定义代码文件路径.")]
+            public string CSharpPath
+            {
+                get;
+                set;
+            }
+
             [Option('h', "header", Required = true, HelpText = "表格中有几行是表头.")]
             public int HeaderRows
             {
