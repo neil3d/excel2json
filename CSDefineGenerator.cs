@@ -63,7 +63,7 @@ namespace excel2json
             sb.AppendLine();
             if (this.ClassComment != null)
                 sb.AppendLine(this.ClassComment);
-            sb.AppendFormat("class {0}\r\n{{", defName);
+            sb.AppendFormat("public class {0}\r\n{{", defName);
             sb.AppendLine();
 
             foreach (FieldDef field in m_fieldList)
