@@ -36,7 +36,15 @@ namespace excel2json
                 var rowData = new Dictionary<string, object>();
                 foreach (DataColumn column in sheet.Columns)
                 {
-                    rowData[column.ToString()] = row[column];
+                    object value = row[column];
+                    // 去掉数值字段的“.0”
+                    if (value.GetType() == typeof(double))
+                    {
+                        double num = (double)value;
+                        if ((int)num == num)
+                            value = (int)num;
+                    }
+                    rowData[column.ToString()] = value;
                 }
 
                 string ID = row[sheet.Columns[0]].ToString();
