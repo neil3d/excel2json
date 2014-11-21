@@ -44,6 +44,12 @@ namespace excel2json
                         if ((int)num == num)
                             value = (int)num;
                     }
+                    
+                    if (column.DataType == typeof(Object))
+                    {
+                        value = value + "";
+                    }
+                    
                     rowData[column.ToString()] = value;
                 }
 
