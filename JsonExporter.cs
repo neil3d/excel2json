@@ -19,7 +19,7 @@ namespace excel2json
         /// </summary>
         /// <param name="sheet">ExcelReader创建的一个表单</param>
         /// <param name="headerRows">表单中的那几行是表头</param>
-        public JsonExporter(DataTable sheet, int headerRows)
+        public JsonExporter(DataTable sheet, int headerRows, bool lowcase)
         {
             if (sheet.Columns.Count <= 0)
                 return;
@@ -33,6 +33,10 @@ namespace excel2json
             for (int i = firstDataRow; i < sheet.Rows.Count; i++)
             {
                 DataRow row = sheet.Rows[i];
+                string ID = row[sheet.Columns[0]].ToString();
+                if (ID.Length <= 0)
+                    continue;
+
                 var rowData = new Dictionary<string, object>();
                 foreach (DataColumn column in sheet.Columns)
                 {
@@ -44,10 +48,13 @@ namespace excel2json
                         if ((int)num == num)
                             value = (int)num;
                     }
-                    rowData[column.ToString()] = value;
+                    string fieldName = column.ToString();
+                    // 表头自动转换成小写
+                    if (lowcase)    
+                        fieldName = fieldName.ToLower();
+                    rowData[fieldName] = value;
                 }
 
-                string ID = row[sheet.Columns[0]].ToString();
                 m_data[ID] = rowData;
             }
         }

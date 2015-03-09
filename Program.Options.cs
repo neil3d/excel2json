@@ -52,6 +52,13 @@ namespace excel2json
                 get;
                 set;
             }
+
+            [Option('l', "lowcase", Required = false, DefaultValue = false, HelpText = "字段名称自动转换为小写")]
+            public bool Lowcase
+            {
+                get;
+                set;
+            }
         }
     }
 }
