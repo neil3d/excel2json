@@ -52,7 +52,9 @@ namespace excel2json
                     // 表头自动转换成小写
                     if (lowcase)    
                         fieldName = fieldName.ToLower();
-                    rowData[fieldName] = value;
+
+                    if (!string.IsNullOrEmpty(fieldName))
+                        rowData[fieldName] = value;
                 }
 
                 m_data[ID] = rowData;
