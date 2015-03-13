@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>SharpZipLib</id>
+    <version>0.86.0</version>
+    <title>SharpZipLib</title>
+    <authors>http://www.icsharpcode.net/</authors>
+    <owners>http://www.icsharpcode.net/</owners>
+    <projectUrl>http://www.icsharpcode.net/OpenSource/SharpZipLib/Default.aspx</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>#ziplib (SharpZipLib, formerly NZipLib) is a Zip, GZip, Tar and BZip2 library written entirely in C# for the .NET platform. It is implemented as an assembly (installable in the GAC), and thus can easily be incorporated into other projects (in any .NET language).</description>
+    <summary>#ziplib (SharpZipLib, formerly NZipLib) is a Zip, GZip, Tar and BZip2 library written entirely in C# for the .NET platform. It is implemented as an assembly (installable in the GAC), and thus can easily be incorporated into other projects (in any .NET language).</summary>
+  </metadata>
+</package>

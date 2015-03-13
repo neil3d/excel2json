@@ -2,6 +2,7 @@ excel2json
 ==========
 
 - 把Excel表单转换成json对象，并保存到一个文本文件中。
+- 表格格式见ExampleData.xlsx
 - 导出的json对象的结构如下，每一行转换成一个json对象：
 {
 	ID:{...}
@@ -9,12 +10,6 @@ excel2json
 	ID:{...}
 	...
 }
-
-Project Setup
--------------
-  - 导入CommandLine库：Install-Package CommandLineParser
-  - 导入ExcelReader库：Install-Package ExcelDataReader
-  - 导入JSON.NET库：Install-Package Newtonsoft.Json
 
 Excel表单格式约定
 -----------------
