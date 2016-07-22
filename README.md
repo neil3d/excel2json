@@ -1,4 +1,4 @@
-excel2json
+﻿excel2json
 ==========
 
 - 把Excel表单转换成json对象，并保存到一个文本文件中。
@@ -20,7 +20,7 @@ Excel表单格式约定
   - 使用表头生成C#数据定义代码
 
 命令行参数
----------
+----------
 -  -e, --excel       Required. 输入的Excel文件路径.
 -  -j, --json        指定输出的json文件路径.
 -  -s, --sql         指定输出的SQL文件路径.
