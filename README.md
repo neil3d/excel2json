@@ -1,15 +1,17 @@
 excel2json
 ==========
 
+！[](https://raw.githubusercontent.com/neil3d/excel2json/master/cmd.png)
+
 - 把Excel表单转换成json对象，并保存到一个文本文件中。
 - 表格格式见:ExampleData.xlsx
-- 支持导出为数组 Json格式，每一行转换为数组的一行，结构如下：
+- 支持导出为数组 Json格式，每一行转换为数组的一行，[结构如下](https://raw.githubusercontent.com/neil3d/excel2json/master/ExampleDataExportArray.json)：
 [
 	{行内容},
 	{行内容},
 	{...},
 ]
-- 支持导出为Dictionary Json对象, 每一行转换成一个json对象。结构如下：
+- 支持导出为Dictionary Json对象, 每一行转换成一个json对象。[结构如下](https://raw.githubusercontent.com/neil3d/excel2json/master/ExampleDataExportDict.json)：
 {
 	ID:{行内容},
 	ID:{行内容},
