@@ -59,6 +59,13 @@ namespace excel2json
                 get;
                 set;
             }
+
+            [Option('a', "array", Required = false, DefaultValue = false, HelpText = "导出为数组")]
+            public bool ExportArray
+            {
+                get;
+                set;
+            }
         }
     }
 }

@@ -2,13 +2,18 @@ excel2json
 ==========
 
 - 把Excel表单转换成json对象，并保存到一个文本文件中。
-- 表格格式见ExampleData.xlsx
-- 导出的json对象的结构如下，每一行转换成一个json对象：
+- 表格格式见:ExampleData.xlsx
+- 支持导出为数组 Json格式，每一行转换为数组的一行，结构如下：
+[
+	{行内容},
+	{行内容},
+	{...},
+]
+- 支持导出为Dictionary Json对象, 每一行转换成一个json对象。结构如下：
 {
+	ID:{行内容},
+	ID:{行内容},
 	ID:{...}
-	ID:{...}
-	ID:{...}
-	...
 }
 
 Excel表单格式约定
@@ -29,4 +34,4 @@ Excel表单格式约定
 -  -c, --encoding    (Default: utf8-nobom) 指定编码的名称.
 -  -l, --lowcase     (Default: false) 自动把字段名称转换成小写格式.
 
-例如：“excel2json --excel test.xlsx --json test.json --header 3”，其中的输入和输出文件，都在当前目录下；
+例如：“excel2json --excel test.xlsx --json test.json --header 3 --array true”，其中的输入和输出文件，都在当前目录下；

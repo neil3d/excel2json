@@ -1,0 +1,41 @@
+[
+  {
+    "ID": "BS001",
+    "Name": "鬼道士",
+    "AssetName": "BS001",
+    "HP": 100,
+    "Attack": 15,
+    "Defence": 0,
+    "ActPoints": 5,
+    "ActSpeed": 1.5,
+    "Hit": 8,
+    "Dodge": 0,
+    "Critical": 8
+  },
+  {
+    "ID": "BS002",
+    "Name": "钟馗",
+    "AssetName": "BS002",
+    "HP": 352,
+    "Attack": 22,
+    "Defence": 3,
+    "ActPoints": 32,
+    "ActSpeed": 4,
+    "Hit": 3,
+    "Dodge": 4,
+    "Critical": 2
+  },
+  {
+    "ID": "BS003",
+    "Name": "厉鬼",
+    "AssetName": "BS003",
+    "HP": 332,
+    "Attack": 3,
+    "Defence": 44,
+    "ActPoints": 432,
+    "ActSpeed": 4,
+    "Hit": 3,
+    "Dodge": 4,
+    "Critical": 2
+  }
+]

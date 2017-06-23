@@ -65,13 +65,24 @@ namespace excel2json
         /// 将内部数据转换成Json文本，并保存至文件
         /// </summary>
         /// <param name="jsonPath">输出文件路径</param>
-        public void SaveToFile(string filePath, Encoding encoding)
+        public void SaveToFile(string filePath, Encoding encoding, bool exportArray)
         {
             if (m_data == null)
                 throw new Exception("JsonExporter内部数据为空。");
 
             //-- 转换为JSON字符串
-            string json = JsonConvert.SerializeObject(m_data, Formatting.Indented);
+            string json;
+            if (exportArray)
+            {
+                List<object> values = new List<object>();
+                foreach (var obj in m_data.Values)
+                    values.Add(obj);
+                json = JsonConvert.SerializeObject(values, Formatting.Indented);
+            }
+            else
+            {
+                json = JsonConvert.SerializeObject(m_data, Formatting.Indented);
+            }
 
             //-- 保存文件
             using (FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write))
