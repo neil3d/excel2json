@@ -1,7 +1,7 @@
 excel2json
 ==========
 
-！[](https://raw.githubusercontent.com/neil3d/excel2json/master/cmd.png)
+[](https://raw.githubusercontent.com/neil3d/excel2json/master/cmd.png)
 
 - 把Excel表单转换成json对象，并保存到一个文本文件中。
 - 表格格式见:ExampleData.xlsx
