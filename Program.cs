@@ -42,7 +42,7 @@ namespace excel2json
             Console.WriteLine(
                 string.Format("[{0}]：\t转换完成[{1}毫秒].",
                 Path.GetFileName(options.ExcelPath),
-                dur.Milliseconds)
+                dur.TotalMilliseconds)
                 );
         }
 
