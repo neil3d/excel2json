@@ -11,56 +11,56 @@ namespace excel2json
         /// </summary>
         private sealed class Options
         {
-            [Option('e', "excel", Required=true, HelpText = "输入的Excel文件路径.")]
+            [Option('e', "excel", Required=true, HelpText = "input excel file path.")]
             public string ExcelPath
             {
                 get;
                 set;
             }
 
-            [Option('j', "json", Required = false, HelpText = "指定输出的json文件路径.")]
+            [Option('j', "json", Required = false, HelpText = "export json file path.")]
             public string JsonPath
             {
                 get;
                 set;
             }
 
-            [Option('s', "sql", Required = false, HelpText = "指定输出的SQL文件路径.")]
+            [Option('s', "sql", Required = false, HelpText = "export SQL file path.")]
             public string SQLPath
             {
                 get;
                 set;
             }
 
-            [Option('p', "csharp", Required = false, HelpText = "指定输出的C#数据定义代码文件路径.")]
+            [Option('p', "csharp", Required = false, HelpText = "export C# data struct code file path.")]
             public string CSharpPath
             {
                 get;
                 set;
             }
 
-            [Option('h', "header", Required = true, HelpText = "表格中有几行是表头.")]
+            [Option('h', "header", Required = true, HelpText = "number lines in sheet as header.")]
             public int HeaderRows
             {
                 get;
                 set;
             }
 
-            [Option('c', "encoding", Required = false, DefaultValue="utf8-nobom", HelpText = "指定编码的名称.")]
+            [Option('c', "encoding", Required = false, DefaultValue="utf8-nobom", HelpText = "export file encoding.")]
             public string Encoding
             {
                 get;
                 set;
             }
 
-            [Option('l', "lowcase", Required = false, DefaultValue = false, HelpText = "字段名称自动转换为小写")]
+            [Option('l', "lowcase", Required = false, DefaultValue = false, HelpText = "convert filed name to lowcase.")]
             public bool Lowcase
             {
                 get;
                 set;
             }
 
-            [Option('a', "array", Required = false, DefaultValue = false, HelpText = "导出为数组")]
+            [Option('a', "array", Required = false, DefaultValue = false, HelpText = "export as array, otherwise as dict object.")]
             public bool ExportArray
             {
                 get;

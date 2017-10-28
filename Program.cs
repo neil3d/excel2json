@@ -40,7 +40,7 @@ namespace excel2json
             System.DateTime endTime = System.DateTime.Now;
             System.TimeSpan dur = endTime - startTime;
             Console.WriteLine(
-                string.Format("[{0}]：\t转换完成[{1}毫秒].",
+                string.Format("[{0}]：\tConversion complete in [{1}ms].",
                 Path.GetFileName(options.ExcelPath),
                 dur.TotalMilliseconds)
                 );
@@ -68,14 +68,14 @@ namespace excel2json
                 // 数据检测
                 if (book.Tables.Count < 1)
                 {
-                    throw new Exception("Excel文件中没有找到Sheet: " + excelPath);
+                    throw new Exception("Excel file is empty: " + excelPath);
                 }
 
                 // 取得数据
                 DataTable sheet = book.Tables[0];
                 if (sheet.Rows.Count <= 0)
                 {
-                    throw new Exception("Excel Sheet中没有数据: " + excelPath);
+                    throw new Exception("Excel Sheet is empty: " + excelPath);
                 }
 
                 //-- 确定编码
