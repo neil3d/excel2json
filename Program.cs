@@ -2,62 +2,68 @@
 using System.IO;
 using System.Data;
 using System.Text;
+using System.Windows.Forms;
+
 using Excel;
 
-namespace excel2json
-{
+namespace excel2json {
     /// <summary>
     /// 应用程序
     /// </summary>
-    sealed partial class Program
-    {
+    sealed partial class Program {
         /// <summary>
         /// 应用程序入口
         /// </summary>
         /// <param name="args">命令行参数</param>
-        static void Main(string[] args)
-        {
-            System.DateTime startTime = System.DateTime.Now;
-
-            //-- 分析命令行参数
-            var options = new Options();
-            var parser = new CommandLine.Parser(with => with.HelpWriter = Console.Error);
-
-            if (parser.ParseArgumentsStrict(args, options, () => Environment.Exit(-1)))
-            {
-                //-- 执行导出操作
-                try
-                {
-                    Run(options);
-                }
-                catch (Exception exp)
-                {
-                    Console.WriteLine("Error: " + exp.Message);
-                }
+        [STAThread]
+        static void Main(string[] args) {
+            if (args.Length <= 0) {
+                //-- GUI MODE ----------------------------------------------------------
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
             }
+            else {
+                //-- COMMAND LINE MODE ----------------------------------------------------------
 
-            //-- 程序计时
-            System.DateTime endTime = System.DateTime.Now;
-            System.TimeSpan dur = endTime - startTime;
-            Console.WriteLine(
-                string.Format("[{0}]：\tConversion complete in [{1}ms].",
-                Path.GetFileName(options.ExcelPath),
-                dur.TotalMilliseconds)
-                );
+                System.DateTime startTime = System.DateTime.Now;
+
+                //-- 分析命令行参数
+                var options = new Options();
+                var parser = new CommandLine.Parser(with => with.HelpWriter = Console.Error);
+
+                if (parser.ParseArgumentsStrict(args, options, () => Environment.Exit(-1))) {
+                    //-- 执行导出操作
+                    try {
+                        Run(options);
+                    }
+                    catch (Exception exp) {
+                        Console.WriteLine("Error: " + exp.Message);
+                    }
+                }
+
+                //-- 程序计时
+                System.DateTime endTime = System.DateTime.Now;
+                System.TimeSpan dur = endTime - startTime;
+                Console.WriteLine(
+                    string.Format("[{0}]：\tConversion complete in [{1}ms].",
+                    Path.GetFileName(options.ExcelPath),
+                    dur.TotalMilliseconds)
+                    );
+                Console.WriteLine("excel2json created by yanling, https://neil3d.github.io");
+            }
         }
 
         /// <summary>
         /// 根据命令行参数，执行Excel数据导出工作
         /// </summary>
         /// <param name="options">命令行参数</param>
-        private static void Run(Options options)
-        {
+        private static void Run(Options options) {
             string excelPath = options.ExcelPath;
             int header = options.HeaderRows;
 
             // 加载Excel文件
-            using (FileStream excelFile = File.Open(excelPath, FileMode.Open, FileAccess.Read))
-            {
+            using (FileStream excelFile = File.Open(excelPath, FileMode.Open, FileAccess.Read)) {
                 // Reading from a OpenXml Excel file (2007 format; *.xlsx)
                 IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(excelFile);
 
@@ -66,27 +72,22 @@ namespace excel2json
                 DataSet book = excelReader.AsDataSet();
 
                 // 数据检测
-                if (book.Tables.Count < 1)
-                {
+                if (book.Tables.Count < 1) {
                     throw new Exception("Excel file is empty: " + excelPath);
                 }
 
                 // 取得数据
                 DataTable sheet = book.Tables[0];
-                if (sheet.Rows.Count <= 0)
-                {
+                if (sheet.Rows.Count <= 0) {
                     throw new Exception("Excel Sheet is empty: " + excelPath);
                 }
 
                 //-- 确定编码
                 Encoding cd = new UTF8Encoding(false);
-                if (options.Encoding != "utf8-nobom")
-                {
-                    foreach (EncodingInfo ei in Encoding.GetEncodings())
-                    {
+                if (options.Encoding != "utf8-nobom") {
+                    foreach (EncodingInfo ei in Encoding.GetEncodings()) {
                         Encoding e = ei.GetEncoding();
-                        if (e.EncodingName == options.Encoding)
-                        {
+                        if (e.EncodingName == options.Encoding) {
                             cd = e;
                             break;
                         }
@@ -94,22 +95,19 @@ namespace excel2json
                 }
 
                 //-- 导出JSON文件
-                if (options.JsonPath != null && options.JsonPath.Length > 0)
-                {
+                if (options.JsonPath != null && options.JsonPath.Length > 0) {
                     JsonExporter exporter = new JsonExporter(sheet, header, options.Lowcase);
                     exporter.SaveToFile(options.JsonPath, cd, options.ExportArray);
                 }
 
                 //-- 导出SQL文件
-                if (options.SQLPath != null && options.SQLPath.Length > 0)
-                {
+                if (options.SQLPath != null && options.SQLPath.Length > 0) {
                     SQLExporter exporter = new SQLExporter(sheet, header);
                     exporter.SaveToFile(options.SQLPath, cd);
                 }
 
                 //-- 生成C#定义文件
-                if (options.CSharpPath != null && options.CSharpPath.Length > 0)
-                {
+                if (options.CSharpPath != null && options.CSharpPath.Length > 0) {
                     string excelName = Path.GetFileName(excelPath);
 
                     CSDefineGenerator exporter = new CSDefineGenerator(sheet);
