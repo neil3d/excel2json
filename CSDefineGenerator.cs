@@ -4,16 +4,13 @@ using System.Data;
 using System.Text;
 using System.Collections.Generic;
 
-namespace excel2json
-{
+namespace excel2json {
     /// <summary>
     /// 根据表头，生成C#类定义数据结构
     /// 表头使用三行定义：字段名称、字段类型、注释
     /// </summary>
-    class CSDefineGenerator
-    {
-        struct FieldDef
-        {
+    class CSDefineGenerator {
+        struct FieldDef {
             public string name;
             public string type;
             public string comment;
@@ -21,14 +18,12 @@ namespace excel2json
 
         List<FieldDef> m_fieldList;
 
-        public String ClassComment
-        {
+        public String ClassComment {
             get;
             set;
         }
 
-        public CSDefineGenerator(DataTable sheet)
-        {
+        public CSDefineGenerator(DataTable sheet) {
             //-- First Row as Column Name
             if (sheet.Rows.Count < 2)
                 return;
@@ -37,8 +32,7 @@ namespace excel2json
             DataRow typeRow = sheet.Rows[0];
             DataRow commentRow = sheet.Rows[1];
 
-            foreach (DataColumn column in sheet.Columns)
-            {
+            foreach (DataColumn column in sheet.Columns) {
                 FieldDef field;
                 field.name = column.ToString();
                 field.type = typeRow[column].ToString();
@@ -48,8 +42,7 @@ namespace excel2json
             }
         }
 
-        public void SaveToFile(string filePath, Encoding encoding)
-        {
+        public void SaveToFile(string filePath, Encoding encoding) {
             if (m_fieldList == null)
                 throw new Exception("CSDefineGenerator内部数据为空。");
 
@@ -66,8 +59,7 @@ namespace excel2json
             sb.AppendFormat("public class {0}\r\n{{", defName);
             sb.AppendLine();
 
-            foreach (FieldDef field in m_fieldList)
-            {
+            foreach (FieldDef field in m_fieldList) {
                 sb.AppendFormat("\tpublic {0} {1}; // {2}", field.type, field.name, field.comment);
                 sb.AppendLine();
             }
@@ -77,8 +69,7 @@ namespace excel2json
             sb.AppendLine("// End of Auto Generated Code");
 
             //-- 保存文件
-            using (FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-            {
+            using (FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
                 using (TextWriter writer = new StreamWriter(file, encoding))
                     writer.Write(sb.ToString());
             }

@@ -25,7 +25,6 @@ namespace excel2json {
             }
             else {
                 //-- COMMAND LINE MODE ----------------------------------------------------------
-
                 System.DateTime startTime = System.DateTime.Now;
 
                 //-- 分析命令行参数

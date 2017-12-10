@@ -5,10 +5,8 @@ using System.Text;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace excel2json
-{
-    class SQLExporter
-    {
+namespace excel2json {
+    class SQLExporter {
         DataTable m_sheet;
         int m_headerRows;
 
@@ -17,8 +15,7 @@ namespace excel2json
         /// </summary>
         /// <param name="sheet">Excel读取的一个表单</param>
         /// <param name="headerRows">表头有几行</param>
-        public SQLExporter(DataTable sheet, int headerRows)
-        {
+        public SQLExporter(DataTable sheet, int headerRows) {
             m_sheet = sheet;
             m_headerRows = headerRows;
         }
@@ -28,18 +25,15 @@ namespace excel2json
         /// </summary>
         /// <param name="filePath">存盘文件</param>
         /// <param name="encoding">编码格式</param>
-        public void SaveToFile(string filePath, Encoding encoding)
-        {
+        public void SaveToFile(string filePath, Encoding encoding) {
             //-- 转换成SQL语句
             string tableName = Path.GetFileNameWithoutExtension(filePath);
             string tabelStruct = GetTabelStructSQL(m_sheet, tableName);
             string tabelContent = GetTableContentSQL(m_sheet, tableName);
 
             //-- 保存文件
-            using (FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-            {
-                using (TextWriter writer = new StreamWriter(file, encoding))
-                {
+            using (FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
+                using (TextWriter writer = new StreamWriter(file, encoding)) {
                     writer.Write(tabelStruct);
                     writer.WriteLine();
                     writer.Write(tabelContent);
@@ -50,27 +44,23 @@ namespace excel2json
         /// <summary>
         /// 将表单内容转换成INSERT语句
         /// </summary>
-        private string GetTableContentSQL(DataTable sheet, string tabelName)
-        {
+        private string GetTableContentSQL(DataTable sheet, string tabelName) {
             StringBuilder sbContent = new StringBuilder();
             StringBuilder sbNames = new StringBuilder();
             StringBuilder sbValues = new StringBuilder();
 
             //-- 字段名称列表
-            foreach (DataColumn column in sheet.Columns)
-            {
+            foreach (DataColumn column in sheet.Columns) {
                 sbNames.Append(column.ToString());
                 sbNames.Append(", ");
             }
 
             //-- 逐行转换数据
             int firstDataRow = m_headerRows - 1;
-            for (int i = firstDataRow; i < sheet.Rows.Count; i++ )
-            {
+            for (int i = firstDataRow; i < sheet.Rows.Count; i++) {
                 DataRow row = sheet.Rows[i];
                 sbValues.Clear();
-                foreach (DataColumn column in sheet.Columns)
-                {
+                foreach (DataColumn column in sheet.Columns) {
                     if (sbValues.Length > 0)
                         sbValues.Append(", ");
                     sbValues.AppendFormat("'{0}'", row[column].ToString());
@@ -92,16 +82,14 @@ namespace excel2json
         /// <summary>
         /// 根据表头构造CREATE TABLE语句
         /// </summary>
-        private string GetTabelStructSQL(DataTable sheet, string tabelName)
-        {
+        private string GetTabelStructSQL(DataTable sheet, string tabelName) {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("DROP TABLE IF EXISTS `{0}`;\n", tabelName);
             sb.AppendFormat("CREATE TABLE `{0}` (\n", tabelName);
 
             DataRow typeRow = sheet.Rows[0];
 
-            foreach (DataColumn column in sheet.Columns)
-            {
+            foreach (DataColumn column in sheet.Columns) {
                 string filedName = column.ToString();
                 string filedType = typeRow[column].ToString();
 
