@@ -36,7 +36,7 @@
     </StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>excel2json.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\excel2json.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommandLine">
@@ -100,12 +100,13 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="excel.png" />
-    <Content Include="excel2json.ico" />
-    <Content Include="json.png" />
+    <Content Include="Resources\excel.png" />
+    <Content Include="Resources\excel2json.ico" />
+    <Content Include="Resources\json.png" />
     <None Include="Resources\about.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
