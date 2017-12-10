@@ -123,6 +123,7 @@
             this.btnHelp.Text = "Help";
             this.btnHelp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnHelp.ToolTipText = "Help Document on web";
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // splitContainer1
             // 

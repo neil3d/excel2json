@@ -17,5 +17,9 @@ namespace excel2json {
         private void panelExcelDropBox_DragDrop(object sender, DragEventArgs e) {
 
         }
+
+        private void btnHelp_Click(object sender, EventArgs e) {
+            System.Diagnostics.Process.Start("http://neil3d.github.io");
+        }
     }
 }
