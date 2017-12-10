@@ -14,7 +14,7 @@ namespace excel2json {
             InitializeComponent();
         }
 
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e) {
+        private void panelExcelDropBox_DragDrop(object sender, DragEventArgs e) {
 
         }
     }

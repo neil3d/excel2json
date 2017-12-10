@@ -104,6 +104,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\clipboard.png" />
     <Content Include="Resources\excel.png" />
     <Content Include="Resources\excel2json.ico" />
     <Content Include="Resources\json.png" />
