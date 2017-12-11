@@ -107,6 +107,7 @@
     <None Include="Resources\clipboard.png" />
     <Content Include="Resources\excel.png" />
     <Content Include="Resources\excel2json.ico" />
+    <None Include="Resources\excel_64.png" />
     <Content Include="Resources\json.png" />
     <None Include="Resources\about.png" />
   </ItemGroup>
