@@ -28,11 +28,23 @@ namespace excel2json {
         }
 
         private void panelExcelDropBox_DragDrop(object sender, DragEventArgs e) {
-
+            string[] dropData =(string[]) e.Data.GetData(DataFormats.FileDrop, false);
+            if (dropData != null) {
+                this.labelExcelFile.Text = dropData[0];
+            }
         }
 
         private void btnHelp_Click(object sender, EventArgs e) {
             System.Diagnostics.Process.Start("http://neil3d.github.io");
+        }
+
+        private void panelExcelDropBox_DragEnter(object sender, DragEventArgs e) {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) {
+                e.Effect = DragDropEffects.All;
+            }
+            else {
+                e.Effect = DragDropEffects.None;
+            }
         }
     }
 }
