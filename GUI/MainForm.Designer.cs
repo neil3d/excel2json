@@ -33,7 +33,9 @@
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.btnImportExcel = new System.Windows.Forms.ToolStripButton();
             this.btnCopyJSON = new System.Windows.Forms.ToolStripButton();
-            this.btnExportJSON = new System.Windows.Forms.ToolStripButton();
+            this.btnSaveSQL = new System.Windows.Forms.ToolStripButton();
+            this.btnSaveJson = new System.Windows.Forms.ToolStripButton();
+            this.btnSaveCSharp = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnHelp = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -52,6 +54,7 @@
             this.tabPageSQL = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
@@ -134,8 +137,11 @@
             this.toolStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnImportExcel,
+            this.toolStripSeparator1,
             this.btnCopyJSON,
-            this.btnExportJSON,
+            this.btnSaveJson,
+            this.btnSaveSQL,
+            this.btnSaveCSharp,
             this.toolStripSeparator2,
             this.btnHelp});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
@@ -165,15 +171,35 @@
             this.btnCopyJSON.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnCopyJSON.ToolTipText = "Copy JSON string to clipboard";
             // 
-            // btnExportJSON
+            // btnSaveSQL
             // 
-            this.btnExportJSON.Image = global::excel2json.Properties.Resources.json;
-            this.btnExportJSON.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExportJSON.Name = "btnExportJSON";
-            this.btnExportJSON.Size = new System.Drawing.Size(86, 45);
-            this.btnExportJSON.Text = "Export JSON";
-            this.btnExportJSON.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnExportJSON.ToolTipText = "Export JSON file";
+            this.btnSaveSQL.Image = global::excel2json.Properties.Resources.SQL;
+            this.btnSaveSQL.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSaveSQL.Name = "btnSaveSQL";
+            this.btnSaveSQL.Size = new System.Drawing.Size(66, 45);
+            this.btnSaveSQL.Text = "Save SQL";
+            this.btnSaveSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSaveSQL.ToolTipText = "Save SQL File";
+            // 
+            // btnSaveJson
+            // 
+            this.btnSaveJson.Image = global::excel2json.Properties.Resources.json;
+            this.btnSaveJson.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSaveJson.Name = "btnSaveJson";
+            this.btnSaveJson.Size = new System.Drawing.Size(75, 45);
+            this.btnSaveJson.Text = "Save JSON";
+            this.btnSaveJson.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSaveJson.ToolTipText = "Save JSON file";
+            // 
+            // btnSaveCSharp
+            // 
+            this.btnSaveCSharp.Image = global::excel2json.Properties.Resources.code;
+            this.btnSaveCSharp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSaveCSharp.Name = "btnSaveCSharp";
+            this.btnSaveCSharp.Size = new System.Drawing.Size(59, 45);
+            this.btnSaveCSharp.Text = "Save C#";
+            this.btnSaveCSharp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSaveCSharp.ToolTipText = "Save C# File";
             // 
             // toolStripSeparator2
             // 
@@ -388,6 +414,11 @@
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
             this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 48);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -426,7 +457,7 @@
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.ToolStripButton btnImportExcel;
-        private System.Windows.Forms.ToolStripButton btnExportJSON;
+        private System.Windows.Forms.ToolStripButton btnSaveCSharp;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btnHelp;
         private System.Windows.Forms.SplitContainer splitContainer1;
@@ -446,5 +477,8 @@
         private System.Windows.Forms.ComboBox comboBoxLowcase;
         private System.Windows.Forms.ComboBox comboBoxHeader;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.Windows.Forms.ToolStripButton btnSaveSQL;
+        private System.Windows.Forms.ToolStripButton btnSaveJson;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
