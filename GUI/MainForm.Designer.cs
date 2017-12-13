@@ -1,4 +1,4 @@
-﻿namespace excel2json {
+﻿namespace excel2json.GUI {
     partial class MainForm {
         /// <summary>
         /// Required designer variable.

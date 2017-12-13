@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CSDefineGenerator.cs" />
+    <Compile Include="GUI\DataManager.cs" />
     <Compile Include="JsonExporter.cs" />
     <Compile Include="GUI\MainForm.cs">
       <SubType>Form</SubType>

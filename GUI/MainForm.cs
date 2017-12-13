@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace excel2json {
+namespace excel2json.GUI {
     public partial class MainForm : Form {
         public MainForm() {
             InitializeComponent();

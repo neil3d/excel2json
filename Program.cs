@@ -21,7 +21,7 @@ namespace excel2json {
                 //-- GUI MODE ----------------------------------------------------------
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new MainForm());
+                Application.Run(new GUI.MainForm());
             }
             else {
                 //-- COMMAND LINE MODE ----------------------------------------------------------
