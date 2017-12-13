@@ -75,6 +75,8 @@ namespace excel2json.GUI {
             lock (this.mDataMgr) {
                 this.statusLabel.IsLink = false;
                 this.statusLabel.Text = "Load completed.";
+
+                this.textBoxJson.Text = mDataMgr.JsonContext;
             }
         }
 

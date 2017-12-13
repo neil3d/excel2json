@@ -13,6 +13,15 @@ namespace excel2json.GUI {
         private SQLExporter mSQL;
         private CSDefineGenerator mCSharp;
 
+        public string JsonContext {
+            get {
+                if (mJson != null)
+                    return mJson.context;
+                else
+                    return "";
+            }
+        }
+
         public void loadExcel(Program.Options options) {
             string excelPath = options.ExcelPath;
             int header = options.HeaderRows;
@@ -50,7 +59,7 @@ namespace excel2json.GUI {
                 }
 
                 //-- 导出JSON
-                mJson = new JsonExporter(sheet, header, options.Lowcase);
+                mJson = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray);
 
                 //-- 导出SQL
                 mSQL = new SQLExporter(sheet, header);

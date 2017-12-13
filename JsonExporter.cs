@@ -10,20 +10,27 @@ namespace excel2json {
     /// 将DataTable对象，转换成JSON string，并保存到文件中
     /// </summary>
     class JsonExporter {
-        Dictionary<string, Dictionary<string, object>> m_data;
+        string mContext = "";
+
+        public string context {
+            get {
+                return mContext;
+            }
+        }
 
         /// <summary>
         /// 构造函数：完成内部数据创建
         /// </summary>
         /// <param name="sheet">ExcelReader创建的一个表单</param>
         /// <param name="headerRows">表单中的那几行是表头</param>
-        public JsonExporter(DataTable sheet, int headerRows, bool lowcase) {
+        public JsonExporter(DataTable sheet, int headerRows, bool lowcase, bool exportArray) {
             if (sheet.Columns.Count <= 0)
                 return;
             if (sheet.Rows.Count <= 0)
                 return;
 
-            m_data = new Dictionary<string, Dictionary<string, object>>();
+            Dictionary<string, Dictionary<string, object>> importData;
+            importData = new Dictionary<string, Dictionary<string, object>>();
 
             //--以第一列为ID，转换成ID->Object的字典
             int firstDataRow = headerRows - 1;
@@ -51,7 +58,18 @@ namespace excel2json {
                         rowData[fieldName] = value;
                 }
 
-                m_data[ID] = rowData;
+                importData[ID] = rowData;
+            }
+
+            //-- 转换为JSON字符串
+            if (exportArray) {
+                List<object> values = new List<object>();
+                foreach (var obj in importData.Values)
+                    values.Add(obj);
+                mContext = JsonConvert.SerializeObject(values, Formatting.Indented);
+            }
+            else {
+                mContext = JsonConvert.SerializeObject(importData, Formatting.Indented);
             }
         }
 
@@ -59,26 +77,11 @@ namespace excel2json {
         /// 将内部数据转换成Json文本，并保存至文件
         /// </summary>
         /// <param name="jsonPath">输出文件路径</param>
-        public void SaveToFile(string filePath, Encoding encoding, bool exportArray) {
-            if (m_data == null)
-                throw new Exception("JsonExporter内部数据为空。");
-
-            //-- 转换为JSON字符串
-            string json;
-            if (exportArray) {
-                List<object> values = new List<object>();
-                foreach (var obj in m_data.Values)
-                    values.Add(obj);
-                json = JsonConvert.SerializeObject(values, Formatting.Indented);
-            }
-            else {
-                json = JsonConvert.SerializeObject(m_data, Formatting.Indented);
-            }
-
+        public void SaveToFile(string filePath, Encoding encoding) {
             //-- 保存文件
             using (FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
                 using (TextWriter writer = new StreamWriter(file, encoding))
-                    writer.Write(json);
+                    writer.Write(mContext);
             }
         }
     }
