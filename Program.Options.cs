@@ -7,7 +7,14 @@ namespace excel2json {
         /// <summary>
         /// 命令行参数定义
         /// </summary>
-        private sealed class Options {
+        internal sealed class Options {
+            public Options() {
+                this.HeaderRows = 3;
+                this.Encoding = "utf8-nobom";
+                this.Lowcase = false;
+                this.ExportArray = false;
+            }
+
             [Option('e', "excel", Required = true, HelpText = "input excel file path.")]
             public string ExcelPath {
                 get;

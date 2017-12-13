@@ -35,9 +35,9 @@ namespace excel2json.GUI {
         private void loadExcelAsync(string path) {
             this.labelExcelFile.Text = path;
 
-            ExcelLoader loader = new ExcelLoader();
-            loader.path = path;
-            this.backgroundWorker.RunWorkerAsync(loader);
+            Program.Options options = new Program.Options();
+            options.ExcelPath = path;
+            this.backgroundWorker.RunWorkerAsync(options);
         }
 
         private void panelExcelDropBox_DragDrop(object sender, DragEventArgs e) {
@@ -62,13 +62,19 @@ namespace excel2json.GUI {
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e) {
             lock (this.mDataMgr) {
-                this.mDataMgr.loadExcel((ExcelLoader)e.Argument);
+                try {
+                    this.mDataMgr.loadExcel((Program.Options)e.Argument);
+                }
+                catch(Exception exp) {
+                    e.Result = exp;
+                }
             }
         }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
             lock (this.mDataMgr) {
-
+                this.statusLabel.IsLink = false;
+                this.statusLabel.Text = "Load completed.";
             }
         }
 
