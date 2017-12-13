@@ -10,6 +10,8 @@ using System.Windows.Forms;
 
 namespace excel2json.GUI {
     public partial class MainForm : Form {
+        private DataManager mDataMgr;
+
         public MainForm() {
             InitializeComponent();
 
@@ -25,12 +27,23 @@ namespace excel2json.GUI {
                 System.Diagnostics.Debug.Print(e.EncodingName);
             }
             this.comboBoxEncoding.SelectedIndex = this.comboBoxEncoding.Items.Count - 1;
+
+            //--
+            mDataMgr = new DataManager();
+        }
+
+        private void loadExcelAsync(string path) {
+            this.labelExcelFile.Text = path;
+
+            ExcelLoader loader = new ExcelLoader();
+            loader.path = path;
+            this.backgroundWorker.RunWorkerAsync(loader);
         }
 
         private void panelExcelDropBox_DragDrop(object sender, DragEventArgs e) {
-            string[] dropData =(string[]) e.Data.GetData(DataFormats.FileDrop, false);
+            string[] dropData = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             if (dropData != null) {
-                this.labelExcelFile.Text = dropData[0];
+                this.loadExcelAsync(dropData[0]);
             }
         }
 
@@ -44,6 +57,27 @@ namespace excel2json.GUI {
             }
             else {
                 e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e) {
+            lock (this.mDataMgr) {
+                this.mDataMgr.loadExcel((ExcelLoader)e.Argument);
+            }
+        }
+
+        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            lock (this.mDataMgr) {
+
+            }
+        }
+
+        private void btnImportExcel_Click(object sender, EventArgs e) {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.RestoreDirectory = true;
+            dlg.Filter = "Excel File(*.xlsx)|*.xlsx";
+            if (dlg.ShowDialog() == DialogResult.OK) {
+                this.loadExcelAsync(dlg.FileName);
             }
         }
     }

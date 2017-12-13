@@ -51,6 +51,7 @@
             this.tabPageJSON = new System.Windows.Forms.TabPage();
             this.tabPageSQL = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
@@ -151,6 +152,7 @@
             this.btnImportExcel.Text = "Import Excel";
             this.btnImportExcel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnImportExcel.ToolTipText = "Import Excel .xlsx file";
+            this.btnImportExcel.Click += new System.EventHandler(this.btnImportExcel_Click);
             // 
             // btnCopyJSON
             // 
@@ -380,6 +382,11 @@
             this.tabPage3.Text = "C#";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -437,5 +444,6 @@
         private System.Windows.Forms.ComboBox comboBoxType;
         private System.Windows.Forms.ComboBox comboBoxLowcase;
         private System.Windows.Forms.ComboBox comboBoxHeader;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
     }
 }
