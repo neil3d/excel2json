@@ -7,13 +7,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FastColoredTextBoxNS;
 
 namespace excel2json.GUI {
     public partial class MainForm : Form {
         private DataManager mDataMgr;
+        private FastColoredTextBox mJsonTextBox;
+
+        private TextStyle BrownStyle = new TextStyle(Brushes.Brown, null, FontStyle.Regular);
+        private TextStyle MagentaStyle = new TextStyle(Brushes.Magenta, null, FontStyle.Regular);
+        private TextStyle GreenStyle = new TextStyle(Brushes.Green, null, FontStyle.Regular);
 
         public MainForm() {
             InitializeComponent();
+
+            //--
+            mJsonTextBox = new FastColoredTextBox();
+            mJsonTextBox.Dock = DockStyle.Fill;
+            mJsonTextBox.Font = new Font("Microsoft YaHei", 11F);
+            mJsonTextBox.TextChanged += new EventHandler<TextChangedEventArgs>(this.jsonTextChanged);
+            this.tabPageJSON.Controls.Add(mJsonTextBox);
 
             //-- componet init states
             this.comboBoxType.SelectedIndex = 0;
@@ -30,6 +43,16 @@ namespace excel2json.GUI {
 
             //--
             mDataMgr = new DataManager();
+        }
+
+        private void jsonTextChanged(object sender, TextChangedEventArgs e) {
+            e.ChangedRange.ClearStyle(BrownStyle, MagentaStyle, GreenStyle);
+            //allow to collapse brackets block
+            e.ChangedRange.SetFoldingMarkers("{", "}");
+            //string highlighting
+            e.ChangedRange.SetStyle(BrownStyle, @"""""|@""""|''|@"".*?""|(?<!@)(?<range>"".*?[^\\]"")|'.*?[^\\]'");
+            //number highlighting
+            e.ChangedRange.SetStyle(GreenStyle, @"\b\d+[\.]?\d*([eE]\-?\d+)?[lLdDfF]?\b|\b0x[a-fA-F\d]+\b");
         }
 
         private void loadExcelAsync(string path) {
@@ -65,7 +88,7 @@ namespace excel2json.GUI {
                 try {
                     this.mDataMgr.loadExcel((Program.Options)e.Argument);
                 }
-                catch(Exception exp) {
+                catch (Exception exp) {
                     e.Result = exp;
                 }
             }
@@ -76,7 +99,7 @@ namespace excel2json.GUI {
                 this.statusLabel.IsLink = false;
                 this.statusLabel.Text = "Load completed.";
 
-                this.textBoxJson.Text = mDataMgr.JsonContext;
+                mJsonTextBox.Text = mDataMgr.JsonContext;
             }
         }
 
