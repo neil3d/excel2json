@@ -111,5 +111,11 @@ namespace excel2json.GUI {
                 this.loadExcelAsync(dlg.FileName);
             }
         }
+
+        private void statusLabel_Click(object sender, EventArgs e) {
+            if (this.statusLabel.IsLink) {
+                System.Diagnostics.Process.Start(this.statusLabel.Text);
+            }
+        }
     }
 }

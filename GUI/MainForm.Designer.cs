@@ -126,6 +126,7 @@
             this.statusLabel.Size = new System.Drawing.Size(139, 17);
             this.statusLabel.Text = "https://neil3d.github.io";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.statusLabel.Click += new System.EventHandler(this.statusLabel_Click);
             // 
             // toolStrip
             // 
