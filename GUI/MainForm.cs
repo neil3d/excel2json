@@ -16,17 +16,18 @@ namespace excel2json.GUI {
         private FastColoredTextBox mSQLTextBox;
         private FastColoredTextBox mCodeTextBox;
 
+        private TextStyle mBrownStyle = new TextStyle(Brushes.Brown, null, FontStyle.Regular);
+        private TextStyle mMagentaStyle = new TextStyle(Brushes.Magenta, null, FontStyle.Regular);
+        private TextStyle mGreenStyle = new TextStyle(Brushes.Green, null, FontStyle.Regular);
 
-
-        private TextStyle BrownStyle = new TextStyle(Brushes.Brown, null, FontStyle.Regular);
-        private TextStyle MagentaStyle = new TextStyle(Brushes.Magenta, null, FontStyle.Regular);
-        private TextStyle GreenStyle = new TextStyle(Brushes.Green, null, FontStyle.Regular);
+        private List<ToolStripButton> mExportButtonList;
 
         public MainForm() {
             InitializeComponent();
 
             //--
             mJsonTextBox = createTextBoxInTab(this.tabPageJSON);
+            mJsonTextBox.Language = Language.Custom;
             mJsonTextBox.TextChanged += new EventHandler<TextChangedEventArgs>(this.jsonTextChanged);
 
             mSQLTextBox = createTextBoxInTab(this.tabPageSQL);
@@ -49,7 +50,19 @@ namespace excel2json.GUI {
             this.comboBoxEncoding.SelectedIndex = this.comboBoxEncoding.Items.Count - 1;
 
             //--
+            mExportButtonList = new List<ToolStripButton>();
+            mExportButtonList.Add(this.btnCopyJSON);
+            mExportButtonList.Add(this.btnSaveJson);
+            mExportButtonList.Add(this.btnSaveSQL);
+            mExportButtonList.Add(this.btnSaveCSharp);
+            enableExportButtons(false);
+
             mDataMgr = new DataManager();
+        }
+
+        private void enableExportButtons(bool enable) {
+            foreach (var btn in mExportButtonList)
+                btn.Enabled = enable;
         }
 
         private FastColoredTextBox createTextBoxInTab(TabPage tab) {
@@ -61,17 +74,19 @@ namespace excel2json.GUI {
         }
 
         private void jsonTextChanged(object sender, TextChangedEventArgs e) {
-            e.ChangedRange.ClearStyle(BrownStyle, MagentaStyle, GreenStyle);
+            e.ChangedRange.ClearStyle(mBrownStyle, mMagentaStyle, mGreenStyle);
             //allow to collapse brackets block
             e.ChangedRange.SetFoldingMarkers("{", "}");
             //string highlighting
-            e.ChangedRange.SetStyle(BrownStyle, @"""""|@""""|''|@"".*?""|(?<!@)(?<range>"".*?[^\\]"")|'.*?[^\\]'");
+            e.ChangedRange.SetStyle(mBrownStyle, @"""""|@""""|''|@"".*?""|(?<!@)(?<range>"".*?[^\\]"")|'.*?[^\\]'");
             //number highlighting
-            e.ChangedRange.SetStyle(GreenStyle, @"\b\d+[\.]?\d*([eE]\-?\d+)?[lLdDfF]?\b|\b0x[a-fA-F\d]+\b");
+            e.ChangedRange.SetStyle(mGreenStyle, @"\b\d+[\.]?\d*([eE]\-?\d+)?[lLdDfF]?\b|\b0x[a-fA-F\d]+\b");
         }
 
         private void loadExcelAsync(string path) {
             this.labelExcelFile.Text = path;
+
+            enableExportButtons(false);
 
             Program.Options options = new Program.Options();
             options.ExcelPath = path;
@@ -117,6 +132,8 @@ namespace excel2json.GUI {
                 mJsonTextBox.Text = mDataMgr.JsonContext;
                 mSQLTextBox.Text = mDataMgr.SQLContext;
                 mCodeTextBox.Text = mDataMgr.CSharpCode;
+
+                enableExportButtons(true);
             }
         }
 
