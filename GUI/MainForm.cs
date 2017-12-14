@@ -42,12 +42,12 @@ namespace excel2json.GUI {
             this.comboBoxHeader.SelectedIndex = 1;
 
             this.comboBoxEncoding.Items.Clear();
+            this.comboBoxEncoding.Items.Add("utf8-nobom");
             foreach (EncodingInfo ei in Encoding.GetEncodings()) {
                 Encoding e = ei.GetEncoding();
                 this.comboBoxEncoding.Items.Add(e.EncodingName);
-                System.Diagnostics.Debug.Print(e.EncodingName);
             }
-            this.comboBoxEncoding.SelectedIndex = this.comboBoxEncoding.Items.Count - 1;
+            this.comboBoxEncoding.SelectedIndex = 0;
 
             //--
             mExportButtonList = new List<ToolStripButton>();
@@ -84,12 +84,19 @@ namespace excel2json.GUI {
         }
 
         private void loadExcelAsync(string path) {
+            //-- update ui
             this.labelExcelFile.Text = path;
-
             enableExportButtons(false);
 
+            //-- load options from ui
             Program.Options options = new Program.Options();
             options.ExcelPath = path;
+            options.ExportArray = this.comboBoxType.SelectedIndex == 0;
+            options.Encoding = this.comboBoxEncoding.SelectedText;
+            options.Lowcase = this.comboBoxLowcase.SelectedIndex == 0;
+            options.HeaderRows = int.Parse(this.comboBoxHeader.Text);
+
+            //-- start import
             this.backgroundWorker.RunWorkerAsync(options);
         }
 

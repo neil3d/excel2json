@@ -9,6 +9,7 @@ using System.IO;
 
 namespace excel2json.GUI {
     class DataManager {
+        private Program.Options mOptions;
         private JsonExporter mJson;
         private SQLExporter mSQL;
         private CSDefineGenerator mCSharp;
@@ -41,6 +42,7 @@ namespace excel2json.GUI {
         }
 
         public void loadExcel(Program.Options options) {
+            mOptions = options;
             string excelPath = options.ExcelPath;
             string excelName = Path.GetFileNameWithoutExtension(excelPath);
             int header = options.HeaderRows;
