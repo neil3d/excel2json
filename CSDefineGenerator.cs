@@ -16,19 +16,20 @@ namespace excel2json {
             public string comment;
         }
 
-        List<FieldDef> m_fieldList;
+        string mCode;
 
-        public String ClassComment {
-            get;
-            set;
+        public string code {
+            get {
+                return this.mCode;
+            }
         }
 
-        public CSDefineGenerator(DataTable sheet) {
+        public CSDefineGenerator(string excelName, DataTable sheet) {
             //-- First Row as Column Name
             if (sheet.Rows.Count < 2)
                 return;
 
-            m_fieldList = new List<FieldDef>();
+            List<FieldDef> m_fieldList = new List<FieldDef>();
             DataRow typeRow = sheet.Rows[0];
             DataRow commentRow = sheet.Rows[1];
 
@@ -40,13 +41,6 @@ namespace excel2json {
 
                 m_fieldList.Add(field);
             }
-        }
-
-        public void SaveToFile(string filePath, Encoding encoding) {
-            if (m_fieldList == null)
-                throw new Exception("CSDefineGenerator内部数据为空。");
-
-            string defName = Path.GetFileNameWithoutExtension(filePath);
 
             //-- 创建代码字符串
             StringBuilder sb = new StringBuilder();
@@ -54,9 +48,9 @@ namespace excel2json {
             sb.AppendLine("// Auto Generated Code By excel2json");
             sb.AppendLine("//");
             sb.AppendLine();
-            if (this.ClassComment != null)
-                sb.AppendLine(this.ClassComment);
-            sb.AppendFormat("public class {0}\r\n{{", defName);
+            sb.AppendFormat("// Generate From {0}.xlsx", excelName);
+            sb.AppendLine();
+            sb.AppendFormat("public class {0}\r\n{{", excelName);
             sb.AppendLine();
 
             foreach (FieldDef field in m_fieldList) {
@@ -68,10 +62,14 @@ namespace excel2json {
             sb.AppendLine();
             sb.AppendLine("// End of Auto Generated Code");
 
+            mCode = sb.ToString();
+        }
+
+        public void SaveToFile(string filePath, Encoding encoding) {
             //-- 保存文件
             using (FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
                 using (TextWriter writer = new StreamWriter(file, encoding))
-                    writer.Write(sb.ToString());
+                    writer.Write(mCode);
             }
         }
     }

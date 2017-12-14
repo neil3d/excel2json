@@ -7,17 +7,30 @@ using Newtonsoft.Json;
 
 namespace excel2json {
     class SQLExporter {
-        DataTable m_sheet;
-        int m_headerRows;
+        string mStructSQL;
+        string mContentSQL;
+
+        public string structSQL {
+            get {
+                return mStructSQL;
+            }
+        }
+
+        public string contentSQL {
+            get {
+                return mContentSQL;
+            }
+        }
 
         /// <summary>
         /// 初始化内部数据
         /// </summary>
         /// <param name="sheet">Excel读取的一个表单</param>
         /// <param name="headerRows">表头有几行</param>
-        public SQLExporter(DataTable sheet, int headerRows) {
-            m_sheet = sheet;
-            m_headerRows = headerRows;
+        public SQLExporter(string tableName, DataTable sheet, int headerRows) {
+            //-- 转换成SQL语句
+            mStructSQL = GetTabelStructSQL(sheet, tableName);
+            mContentSQL = GetTableContentSQL(sheet, tableName, headerRows);
         }
 
         /// <summary>
@@ -26,17 +39,12 @@ namespace excel2json {
         /// <param name="filePath">存盘文件</param>
         /// <param name="encoding">编码格式</param>
         public void SaveToFile(string filePath, Encoding encoding) {
-            //-- 转换成SQL语句
-            string tableName = Path.GetFileNameWithoutExtension(filePath);
-            string tabelStruct = GetTabelStructSQL(m_sheet, tableName);
-            string tabelContent = GetTableContentSQL(m_sheet, tableName);
-
             //-- 保存文件
             using (FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
                 using (TextWriter writer = new StreamWriter(file, encoding)) {
-                    writer.Write(tabelStruct);
+                    writer.Write(mStructSQL);
                     writer.WriteLine();
-                    writer.Write(tabelContent);
+                    writer.Write(mContentSQL);
                 }
             }
         }
@@ -44,7 +52,7 @@ namespace excel2json {
         /// <summary>
         /// 将表单内容转换成INSERT语句
         /// </summary>
-        private string GetTableContentSQL(DataTable sheet, string tabelName) {
+        private string GetTableContentSQL(DataTable sheet, string tabelName, int headerRows) {
             StringBuilder sbContent = new StringBuilder();
             StringBuilder sbNames = new StringBuilder();
             StringBuilder sbValues = new StringBuilder();
@@ -56,7 +64,7 @@ namespace excel2json {
             }
 
             //-- 逐行转换数据
-            int firstDataRow = m_headerRows - 1;
+            int firstDataRow = headerRows - 1;
             for (int i = firstDataRow; i < sheet.Rows.Count; i++) {
                 DataRow row = sheet.Rows[i];
                 sbValues.Clear();
@@ -103,6 +111,7 @@ namespace excel2json {
 
             sb.AppendFormat("PRIMARY KEY (`{0}`) ", sheet.Columns[0].ToString());
             sb.AppendLine("\n) DEFAULT CHARSET=utf8;");
+            sb.AppendLine();
             return sb.ToString();
         }
     }

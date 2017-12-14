@@ -59,6 +59,7 @@ namespace excel2json {
         /// <param name="options">命令行参数</param>
         private static void Run(Options options) {
             string excelPath = options.ExcelPath;
+            string excelName = Path.GetFileNameWithoutExtension(options.ExcelPath);
             int header = options.HeaderRows;
 
             // 加载Excel文件
@@ -101,16 +102,13 @@ namespace excel2json {
 
                 //-- 导出SQL文件
                 if (options.SQLPath != null && options.SQLPath.Length > 0) {
-                    SQLExporter exporter = new SQLExporter(sheet, header);
+                    SQLExporter exporter = new SQLExporter(excelName, sheet, header);
                     exporter.SaveToFile(options.SQLPath, cd);
                 }
 
                 //-- 生成C#定义文件
                 if (options.CSharpPath != null && options.CSharpPath.Length > 0) {
-                    string excelName = Path.GetFileName(excelPath);
-
-                    CSDefineGenerator exporter = new CSDefineGenerator(sheet);
-                    exporter.ClassComment = string.Format("// Generate From {0}", excelName);
+                    CSDefineGenerator exporter = new CSDefineGenerator(excelName, sheet);
                     exporter.SaveToFile(options.CSharpPath, cd);
                 }
             }

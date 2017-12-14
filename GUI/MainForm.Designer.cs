@@ -32,9 +32,10 @@
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.btnImportExcel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnCopyJSON = new System.Windows.Forms.ToolStripButton();
-            this.btnSaveSQL = new System.Windows.Forms.ToolStripButton();
             this.btnSaveJson = new System.Windows.Forms.ToolStripButton();
+            this.btnSaveSQL = new System.Windows.Forms.ToolStripButton();
             this.btnSaveCSharp = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnHelp = new System.Windows.Forms.ToolStripButton();
@@ -52,9 +53,8 @@
             this.tabControlCode = new System.Windows.Forms.TabControl();
             this.tabPageJSON = new System.Windows.Forms.TabPage();
             this.tabPageSQL = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPageCode = new System.Windows.Forms.TabPage();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
@@ -161,6 +161,11 @@
             this.btnImportExcel.ToolTipText = "Import Excel .xlsx file";
             this.btnImportExcel.Click += new System.EventHandler(this.btnImportExcel_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 48);
+            // 
             // btnCopyJSON
             // 
             this.btnCopyJSON.Image = global::excel2json.Properties.Resources.clipboard;
@@ -171,16 +176,6 @@
             this.btnCopyJSON.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnCopyJSON.ToolTipText = "Copy JSON string to clipboard";
             // 
-            // btnSaveSQL
-            // 
-            this.btnSaveSQL.Image = global::excel2json.Properties.Resources.SQL;
-            this.btnSaveSQL.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSaveSQL.Name = "btnSaveSQL";
-            this.btnSaveSQL.Size = new System.Drawing.Size(66, 45);
-            this.btnSaveSQL.Text = "Save SQL";
-            this.btnSaveSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnSaveSQL.ToolTipText = "Save SQL File";
-            // 
             // btnSaveJson
             // 
             this.btnSaveJson.Image = global::excel2json.Properties.Resources.json;
@@ -190,6 +185,16 @@
             this.btnSaveJson.Text = "Save JSON";
             this.btnSaveJson.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnSaveJson.ToolTipText = "Save JSON file";
+            // 
+            // btnSaveSQL
+            // 
+            this.btnSaveSQL.Image = global::excel2json.Properties.Resources.SQL;
+            this.btnSaveSQL.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSaveSQL.Name = "btnSaveSQL";
+            this.btnSaveSQL.Size = new System.Drawing.Size(66, 45);
+            this.btnSaveSQL.Text = "Save SQL";
+            this.btnSaveSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSaveSQL.ToolTipText = "Save SQL File";
             // 
             // btnSaveCSharp
             // 
@@ -371,7 +376,7 @@
             // 
             this.tabControlCode.Controls.Add(this.tabPageJSON);
             this.tabControlCode.Controls.Add(this.tabPageSQL);
-            this.tabControlCode.Controls.Add(this.tabPage3);
+            this.tabControlCode.Controls.Add(this.tabPageCode);
             this.tabControlCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlCode.Location = new System.Drawing.Point(0, 0);
             this.tabControlCode.Name = "tabControlCode";
@@ -399,25 +404,20 @@
             this.tabPageSQL.Text = "SQL";
             this.tabPageSQL.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // tabPageCode
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(509, 464);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "C#";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPageCode.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCode.Name = "tabPageCode";
+            this.tabPageCode.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageCode.Size = new System.Drawing.Size(509, 464);
+            this.tabPageCode.TabIndex = 2;
+            this.tabPageCode.Text = "C#";
+            this.tabPageCode.UseVisualStyleBackColor = true;
             // 
             // backgroundWorker
             // 
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
             this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 48);
             // 
             // MainForm
             // 
@@ -470,7 +470,7 @@
         private System.Windows.Forms.TabControl tabControlCode;
         private System.Windows.Forms.TabPage tabPageJSON;
         private System.Windows.Forms.TabPage tabPageSQL;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPageCode;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox comboBoxEncoding;
         private System.Windows.Forms.ComboBox comboBoxType;

@@ -13,6 +13,10 @@ namespace excel2json.GUI {
     public partial class MainForm : Form {
         private DataManager mDataMgr;
         private FastColoredTextBox mJsonTextBox;
+        private FastColoredTextBox mSQLTextBox;
+        private FastColoredTextBox mCodeTextBox;
+
+
 
         private TextStyle BrownStyle = new TextStyle(Brushes.Brown, null, FontStyle.Regular);
         private TextStyle MagentaStyle = new TextStyle(Brushes.Magenta, null, FontStyle.Regular);
@@ -22,11 +26,14 @@ namespace excel2json.GUI {
             InitializeComponent();
 
             //--
-            mJsonTextBox = new FastColoredTextBox();
-            mJsonTextBox.Dock = DockStyle.Fill;
-            mJsonTextBox.Font = new Font("Microsoft YaHei", 11F);
+            mJsonTextBox = createTextBoxInTab(this.tabPageJSON);
             mJsonTextBox.TextChanged += new EventHandler<TextChangedEventArgs>(this.jsonTextChanged);
-            this.tabPageJSON.Controls.Add(mJsonTextBox);
+
+            mSQLTextBox = createTextBoxInTab(this.tabPageSQL);
+            mSQLTextBox.Language = Language.SQL;
+
+            mCodeTextBox = createTextBoxInTab(this.tabPageCode);
+            mCodeTextBox.Language = Language.CSharp;
 
             //-- componet init states
             this.comboBoxType.SelectedIndex = 0;
@@ -43,6 +50,14 @@ namespace excel2json.GUI {
 
             //--
             mDataMgr = new DataManager();
+        }
+
+        private FastColoredTextBox createTextBoxInTab(TabPage tab) {
+            FastColoredTextBox textBox = new FastColoredTextBox();
+            textBox.Dock = DockStyle.Fill;
+            textBox.Font = new Font("Microsoft YaHei", 11F);
+            tab.Controls.Add(textBox);
+            return textBox;
         }
 
         private void jsonTextChanged(object sender, TextChangedEventArgs e) {
@@ -100,6 +115,8 @@ namespace excel2json.GUI {
                 this.statusLabel.Text = "Load completed.";
 
                 mJsonTextBox.Text = mDataMgr.JsonContext;
+                mSQLTextBox.Text = mDataMgr.SQLContext;
+                mCodeTextBox.Text = mDataMgr.CSharpCode;
             }
         }
 

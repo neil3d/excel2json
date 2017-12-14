@@ -22,8 +22,27 @@ namespace excel2json.GUI {
             }
         }
 
+        public string SQLContext {
+            get {
+                if (mSQL != null)
+                    return mSQL.structSQL + mSQL.contentSQL;
+                else
+                    return "";
+            }
+        }
+
+        public string CSharpCode {
+            get {
+                if (mCSharp != null)
+                    return mCSharp.code;
+                else
+                    return "";
+            }
+        }
+
         public void loadExcel(Program.Options options) {
             string excelPath = options.ExcelPath;
+            string excelName = Path.GetFileNameWithoutExtension(excelPath);
             int header = options.HeaderRows;
 
             // 加载Excel文件
@@ -62,12 +81,10 @@ namespace excel2json.GUI {
                 mJson = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray);
 
                 //-- 导出SQL
-                mSQL = new SQLExporter(sheet, header);
+                mSQL = new SQLExporter(excelName, sheet, header);
 
                 //-- 生成C#定义代码
-                string excelName = Path.GetFileName(excelPath);
-                string classComment = string.Format("// Generate From {0}", excelName);
-                mCSharp = new CSDefineGenerator(sheet);
+                mCSharp = new CSDefineGenerator(excelName, sheet);
             }
         }
     }
