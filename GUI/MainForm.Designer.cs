@@ -122,7 +122,6 @@
             // 
             // statusLabel
             // 
-            this.statusLabel.AutoSize = false;
             this.statusLabel.IsLink = true;
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -175,6 +174,7 @@
             this.btnCopyJSON.Text = "Copy JSON";
             this.btnCopyJSON.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnCopyJSON.ToolTipText = "Copy JSON string to clipboard";
+            this.btnCopyJSON.Click += new System.EventHandler(this.btnCopyJSON_Click);
             // 
             // btnSaveJson
             // 

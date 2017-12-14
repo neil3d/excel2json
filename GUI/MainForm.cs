@@ -177,6 +177,8 @@ namespace excel2json.GUI {
                             break;
                     }
                 }
+                this.statusLabel.Text = string.Format("{0} saved!", dlg.FileName); ;
+
             }// end of if
         }
 
@@ -191,6 +193,13 @@ namespace excel2json.GUI {
 
         private void btnSaveCSharp_Click(object sender, EventArgs e) {
             saveToFile(3, "C# Code File(*.cs)|*.cs");  
+        }
+
+        private void btnCopyJSON_Click(object sender, EventArgs e) {
+            lock (mDataMgr) {
+                Clipboard.SetText(mDataMgr.JsonContext);
+                this.statusLabel.Text = "Json text copyed to clipboard.";
+            }
         }
     }
 }
