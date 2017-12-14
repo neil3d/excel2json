@@ -158,5 +158,39 @@ namespace excel2json.GUI {
                 System.Diagnostics.Process.Start(this.statusLabel.Text);
             }
         }
+
+        private void saveToFile(int type, string filter) {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.RestoreDirectory = true;
+            dlg.Filter = filter;
+            if (dlg.ShowDialog() == DialogResult.OK) {
+                lock (mDataMgr) {
+                    switch (type) {
+                        case 1:
+                            mDataMgr.saveJson(dlg.FileName);
+                            break;
+                        case 2:
+                            mDataMgr.saveSQL(dlg.FileName);
+                            break;
+                        case 3:
+                            mDataMgr.saveCode(dlg.FileName);
+                            break;
+                    }
+                }
+            }// end of if
+        }
+
+        private void btnSaveJson_Click(object sender, EventArgs e) {
+            saveToFile(1, "Json File(*.json)|*.json");  
+        }
+
+        private void btnSaveSQL_Click(object sender, EventArgs e) {
+            saveToFile(2, "SQL File(*.sql)|*.sql");
+
+        }
+
+        private void btnSaveCSharp_Click(object sender, EventArgs e) {
+            saveToFile(3, "C# Code File(*.cs)|*.cs");  
+        }
     }
 }

@@ -10,6 +10,8 @@ using System.IO;
 namespace excel2json.GUI {
     class DataManager {
         private Program.Options mOptions;
+        private Encoding mEncoding;
+
         private JsonExporter mJson;
         private SQLExporter mSQL;
         private CSDefineGenerator mCSharp;
@@ -38,6 +40,24 @@ namespace excel2json.GUI {
                     return mCSharp.code;
                 else
                     return "";
+            }
+        }
+
+        public void saveJson(string filePath) {
+            if (mJson != null) {
+                mJson.SaveToFile(filePath, mEncoding);
+            }
+        }
+
+        public void saveSQL(string filePath) {
+            if (mSQL != null) {
+                mSQL.SaveToFile(filePath, mEncoding);
+            }
+        }
+
+        public void saveCode(string filePath) {
+            if (mCSharp != null) {
+                mCSharp.SaveToFile(filePath, mEncoding);
             }
         }
 
@@ -78,6 +98,7 @@ namespace excel2json.GUI {
                         }
                     }
                 }
+                mEncoding = cd;
 
                 //-- 导出JSON
                 mJson = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray);

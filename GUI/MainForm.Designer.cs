@@ -185,6 +185,7 @@
             this.btnSaveJson.Text = "Save JSON";
             this.btnSaveJson.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnSaveJson.ToolTipText = "Save JSON file";
+            this.btnSaveJson.Click += new System.EventHandler(this.btnSaveJson_Click);
             // 
             // btnSaveSQL
             // 
@@ -195,6 +196,7 @@
             this.btnSaveSQL.Text = "Save SQL";
             this.btnSaveSQL.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnSaveSQL.ToolTipText = "Save SQL File";
+            this.btnSaveSQL.Click += new System.EventHandler(this.btnSaveSQL_Click);
             // 
             // btnSaveCSharp
             // 
@@ -205,6 +207,7 @@
             this.btnSaveCSharp.Text = "Save C#";
             this.btnSaveCSharp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnSaveCSharp.ToolTipText = "Save C# File";
+            this.btnSaveCSharp.Click += new System.EventHandler(this.btnSaveCSharp_Click);
             // 
             // toolStripSeparator2
             // 
