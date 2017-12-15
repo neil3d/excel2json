@@ -25,8 +25,7 @@ namespace excel2json {
             }
             else {
                 //-- COMMAND LINE MODE ----------------------------------------------------------
-                System.DateTime startTime = System.DateTime.Now;
-
+                
                 //-- 分析命令行参数
                 var options = new Options();
                 var parser = new CommandLine.Parser(with => with.HelpWriter = Console.Error);
@@ -34,23 +33,22 @@ namespace excel2json {
                 if (parser.ParseArgumentsStrict(args, options, () => Environment.Exit(-1))) {
                     //-- 执行导出操作
                     try {
+                        DateTime startTime = DateTime.Now;
                         Run(options);
+                        //-- 程序计时
+                        DateTime endTime = DateTime.Now;
+                        TimeSpan dur = endTime - startTime;
+                        Console.WriteLine(
+                            string.Format("[{0}]：\tConversion complete in [{1}ms].",
+                            Path.GetFileName(options.ExcelPath),
+                            dur.TotalMilliseconds)
+                            );
                     }
                     catch (Exception exp) {
                         Console.WriteLine("Error: " + exp.Message);
                     }
                 }
-
-                //-- 程序计时
-                System.DateTime endTime = System.DateTime.Now;
-                System.TimeSpan dur = endTime - startTime;
-                Console.WriteLine(
-                    string.Format("[{0}]：\tConversion complete in [{1}ms].",
-                    Path.GetFileName(options.ExcelPath),
-                    dur.TotalMilliseconds)
-                    );
-                Console.WriteLine("excel2json created by yanling, https://neil3d.github.io");
-            }
+            }// end of else
         }
 
         /// <summary>
