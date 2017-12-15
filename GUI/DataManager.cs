@@ -1,21 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Excel;
+﻿using Excel;
+using System;
 using System.Data;
 using System.IO;
+using System.Text;
 
 namespace excel2json.GUI {
+
+    /// <summary>
+    /// 为GUI模式提供的整体数据管理
+    /// </summary>
     class DataManager {
+      
+        // 数据导入设置
         private Program.Options mOptions;
         private Encoding mEncoding;
 
+        // 导出数据
         private JsonExporter mJson;
         private SQLExporter mSQL;
         private CSDefineGenerator mCSharp;
 
+        /// <summary>
+        /// 导出的Json文本
+        /// </summary>
         public string JsonContext {
             get {
                 if (mJson != null)
@@ -25,6 +32,9 @@ namespace excel2json.GUI {
             }
         }
 
+        /// <summary>
+        /// 导出的SQL文本
+        /// </summary>
         public string SQLContext {
             get {
                 if (mSQL != null)
@@ -34,6 +44,9 @@ namespace excel2json.GUI {
             }
         }
 
+        /// <summary>
+        /// 导出的C#代码
+        /// </summary>
         public string CSharpCode {
             get {
                 if (mCSharp != null)
@@ -43,24 +56,40 @@ namespace excel2json.GUI {
             }
         }
 
+        /// <summary>
+        /// 保存Json
+        /// </summary>
+        /// <param name="filePath">保存路径</param>
         public void saveJson(string filePath) {
             if (mJson != null) {
                 mJson.SaveToFile(filePath, mEncoding);
             }
         }
 
+        /// <summary>
+        /// 保存SQL
+        /// </summary>
+        /// <param name="filePath">保存路径</param>
         public void saveSQL(string filePath) {
             if (mSQL != null) {
                 mSQL.SaveToFile(filePath, mEncoding);
             }
         }
 
+        /// <summary>
+        /// 保存C#代码
+        /// </summary>
+        /// <param name="filePath">保存路径</param>
         public void saveCode(string filePath) {
             if (mCSharp != null) {
                 mCSharp.SaveToFile(filePath, mEncoding);
             }
         }
 
+        /// <summary>
+        /// 加载Excel文件
+        /// </summary>
+        /// <param name="options">导入设置</param>
         public void loadExcel(Program.Options options) {
             mOptions = options;
             string excelPath = options.ExcelPath;
