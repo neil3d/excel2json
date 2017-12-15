@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("https://neil3d.github.io")]
 [assembly: AssemblyProduct("excel2json")]
-[assembly: AssemblyCopyright("https://neil3d.github.io")]
+[assembly: AssemblyCopyright("https://neil3d.github.io/app/excel2json.html")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

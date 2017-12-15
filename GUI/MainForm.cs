@@ -140,7 +140,7 @@ namespace excel2json.GUI {
         /// 显示Help文档
         /// </summary>
         private void btnHelp_Click(object sender, EventArgs e) {
-            System.Diagnostics.Process.Start("http://neil3d.github.io");
+            System.Diagnostics.Process.Start("https://neil3d.github.io/app/excel2json.html");
         }
 
         /// <summary>
