@@ -85,7 +85,7 @@ namespace excel2json {
                 if (options.Encoding != "utf8-nobom") {
                     foreach (EncodingInfo ei in Encoding.GetEncodings()) {
                         Encoding e = ei.GetEncoding();
-                        if (e.EncodingName == options.Encoding) {
+                        if (e.HeaderName == options.Encoding) {
                             cd = e;
                             break;
                         }

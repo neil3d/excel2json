@@ -54,7 +54,7 @@ namespace excel2json.GUI {
             this.comboBoxEncoding.Items.Add("utf8-nobom");
             foreach (EncodingInfo ei in Encoding.GetEncodings()) {
                 Encoding e = ei.GetEncoding();
-                this.comboBoxEncoding.Items.Add(e.EncodingName);
+                this.comboBoxEncoding.Items.Add(e.HeaderName);
             }
             this.comboBoxEncoding.SelectedIndex = 0;
 
