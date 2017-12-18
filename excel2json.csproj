@@ -105,6 +105,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\lua.png" />
     <None Include="Resources\SQL.png" />
     <None Include="Resources\clipboard.png" />
     <None Include="Resources\code.png" />
