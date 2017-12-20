@@ -19,12 +19,13 @@ namespace excel2json {
         static void Main(string[] args) {
             if (args.Length <= 0) {
                 //-- GUI MODE ----------------------------------------------------------
+                Console.WriteLine("Launch excel2json GUI Mode...");
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new GUI.MainForm());
             }
             else {
-                //-- COMMAND LINE MODE ----------------------------------------------------------
+                //-- COMMAND LINE MODE -------------------------------------------------
                 
                 //-- 分析命令行参数
                 var options = new Options();
