@@ -87,6 +87,7 @@
     <Compile Include="SQLExporter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ChangeLog.md" />
     <None Include="Resources\App.config" />
     <None Include="LICENSE" />
     <None Include="packages.config">
