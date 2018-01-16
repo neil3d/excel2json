@@ -46,7 +46,7 @@ namespace excel2json {
                 DataRow row = sheet.Rows[i];
 
                 values.Add(
-                    convertRowData(sheet, row, lowcase)
+                    convertRowData(sheet, row, lowcase, firstDataRow)
                     );
             }
 
@@ -68,7 +68,7 @@ namespace excel2json {
                 if (ID.Length <= 0)
                     ID = string.Format("row_{0}", i);
 
-                importData[ID] = convertRowData(sheet, row, lowcase);
+                importData[ID] = convertRowData(sheet, row, lowcase, firstDataRow);
             }
 
             //-- convert to json string
@@ -78,14 +78,14 @@ namespace excel2json {
         /// <summary>
         /// 把一行数据转换成一个对象，每一列是一个属性
         /// </summary>
-        private object convertRowData(DataTable sheet, DataRow row, bool lowcase) {
+        private object convertRowData(DataTable sheet, DataRow row, bool lowcase, int firstDataRow) {
             var rowData = new Dictionary<string, object>();
             int col = 0;
             foreach (DataColumn column in sheet.Columns) {
                 object value = row[column];
-                
-                if(value.GetType() == typeof(System.DBNull)) {
-                    value = getColumnDefault(column);
+
+                if (value.GetType() == typeof(System.DBNull)) {
+                    value = getColumnDefault(sheet, column, firstDataRow);
                 }
                 else if (value.GetType() == typeof(double)) { // 去掉数值字段的“.0”
                     double num = (double)value;
@@ -111,8 +111,16 @@ namespace excel2json {
         /// <summary>
         /// 对于表格中的空值，找到一列中的非空值，并构造一个同类型的默认值
         /// </summary>
-        private object getColumnDefault(DataColumn column) {
-
+        private object getColumnDefault(DataTable sheet, DataColumn column, int firstDataRow) {
+            for (int i = firstDataRow; i < sheet.Rows.Count; i++) {
+                object value = sheet.Rows[i][column];
+                Type valueType = value.GetType();
+                if (valueType != typeof(System.DBNull)) {
+                    if (valueType.IsValueType)
+                        return Activator.CreateInstance(valueType);
+                    break;
+                }
+            }
             return "";
         }
 
