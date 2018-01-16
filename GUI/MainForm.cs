@@ -167,12 +167,7 @@ namespace excel2json.GUI {
         /// </summary>
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e) {
             lock (this.mDataMgr) {
-                try {
-                    this.mDataMgr.loadExcel((Program.Options)e.Argument);
-                }
-                catch (Exception exp) {
-                    e.Result = exp;
-                }
+                this.mDataMgr.loadExcel((Program.Options)e.Argument);
             }
         }
 

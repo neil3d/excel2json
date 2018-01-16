@@ -29,8 +29,6 @@ namespace excel2json {
             if (sheet.Rows.Count <= 0)
                 return;
 
-           
-
             //-- 转换为JSON字符串
             if (exportArray) {
                 convertArray(sheet, headerRows, lowcase);
