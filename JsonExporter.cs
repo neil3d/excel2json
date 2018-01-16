@@ -29,48 +29,93 @@ namespace excel2json {
             if (sheet.Rows.Count <= 0)
                 return;
 
-            Dictionary<string, Dictionary<string, object>> importData;
-            importData = new Dictionary<string, Dictionary<string, object>>();
+           
 
-            //--以第一列为ID，转换成ID->Object的字典
+            //-- 转换为JSON字符串
+            if (exportArray) {
+                convertArray(sheet, headerRows, lowcase);
+            }
+            else {
+                convertDict(sheet, headerRows, lowcase);
+            }
+        }
+
+        private void convertArray(DataTable sheet, int headerRows, bool lowcase) {
+            List<object> values = new List<object>();
+
+            int firstDataRow = headerRows - 1;
+            for (int i = firstDataRow; i < sheet.Rows.Count; i++) {
+                DataRow row = sheet.Rows[i];
+
+                values.Add(
+                    convertRowData(sheet, row, lowcase)
+                    );
+            }
+
+            //-- convert to json string
+            mContext = JsonConvert.SerializeObject(values, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// 以第一列为ID，转换成ID->Object的字典对象
+        /// </summary>
+        private void convertDict(DataTable sheet, int headerRows, bool lowcase) {
+            Dictionary<string, object> importData =
+                new Dictionary<string, object>();
+
             int firstDataRow = headerRows - 1;
             for (int i = firstDataRow; i < sheet.Rows.Count; i++) {
                 DataRow row = sheet.Rows[i];
                 string ID = row[sheet.Columns[0]].ToString();
                 if (ID.Length <= 0)
-                    continue;
+                    ID = string.Format("row_{0}", i);
 
-                var rowData = new Dictionary<string, object>();
-                foreach (DataColumn column in sheet.Columns) {
-                    object value = row[column];
-                    // 去掉数值字段的“.0”
-                    if (value.GetType() == typeof(double)) {
-                        double num = (double)value;
-                        if ((int)num == num)
-                            value = (int)num;
-                    }
-                    string fieldName = column.ToString();
-                    // 表头自动转换成小写
-                    if (lowcase)
-                        fieldName = fieldName.ToLower();
+                importData[ID] = convertRowData(sheet, row, lowcase);
+            }
 
-                    if (!string.IsNullOrEmpty(fieldName))
-                        rowData[fieldName] = value;
+            //-- convert to json string
+            mContext = JsonConvert.SerializeObject(importData, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// 把一行数据转换成一个对象，每一列是一个属性
+        /// </summary>
+        private object convertRowData(DataTable sheet, DataRow row, bool lowcase) {
+            var rowData = new Dictionary<string, object>();
+            int col = 0;
+            foreach (DataColumn column in sheet.Columns) {
+                object value = row[column];
+                
+                if(value.GetType() == typeof(System.DBNull)) {
+                    value = getColumnDefault(column);
+                }
+                else if (value.GetType() == typeof(double)) { // 去掉数值字段的“.0”
+                    double num = (double)value;
+                    if ((int)num == num)
+                        value = (int)num;
                 }
 
-                importData[ID] = rowData;
+                string fieldName = column.ToString();
+                // 表头自动转换成小写
+                if (lowcase)
+                    fieldName = fieldName.ToLower();
+
+                if (string.IsNullOrEmpty(fieldName))
+                    fieldName = string.Format("col_{0}", col);
+
+                rowData[fieldName] = value;
+                col++;
             }
 
-            //-- 转换为JSON字符串
-            if (exportArray) {
-                List<object> values = new List<object>();
-                foreach (var obj in importData.Values)
-                    values.Add(obj);
-                mContext = JsonConvert.SerializeObject(values, Formatting.Indented);
-            }
-            else {
-                mContext = JsonConvert.SerializeObject(importData, Formatting.Indented);
-            }
+            return rowData;
+        }
+
+        /// <summary>
+        /// 对于表格中的空值，找到一列中的非空值，并构造一个同类型的默认值
+        /// </summary>
+        private object getColumnDefault(DataColumn column) {
+
+            return "";
         }
 
         /// <summary>
