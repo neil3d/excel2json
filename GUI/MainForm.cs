@@ -14,6 +14,7 @@ namespace excel2json.GUI {
     public partial class MainForm : Form {
         // Excel导入数据管理
         private DataManager mDataMgr;
+        private string mCurrentXlsx;
 
         // 支持语法高亮的文本框
         private FastColoredTextBox mJsonTextBox;
@@ -68,6 +69,7 @@ namespace excel2json.GUI {
 
             //-- data manager
             mDataMgr = new DataManager();
+            this.btnReimport.Enabled = false;
         }
 
         /// <summary>
@@ -110,9 +112,16 @@ namespace excel2json.GUI {
         /// </summary>
         /// <param name="path">Excel文件路径</param>
         private void loadExcelAsync(string path) {
+
+            mCurrentXlsx = path;
+
             //-- update ui
+            this.btnReimport.Enabled = true;
             this.labelExcelFile.Text = path;
             enableExportButtons(false);
+
+            this.statusLabel.IsLink = false;
+            this.statusLabel.Text = "Loading Excel ...";
 
             //-- load options from ui
             Program.Options options = new Program.Options();
@@ -288,6 +297,15 @@ namespace excel2json.GUI {
             this.statusLabel.Text = szMessage;
             this.statusLabel.ForeColor = color;
             this.statusLabel.IsLink = false;
+        }
+
+        /// <summary>
+        /// 配置项变更之后，手动重新导入xlsx文件
+        /// </summary>
+        private void btnReimport_Click(object sender, EventArgs e) {
+            if (!string.IsNullOrEmpty(mCurrentXlsx)) {
+                loadExcelAsync(mCurrentXlsx);
+            }
         }
     }
 }

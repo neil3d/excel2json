@@ -55,6 +55,7 @@
             this.tabPageSQL = new System.Windows.Forms.TabPage();
             this.tabPageCode = new System.Windows.Forms.TabPage();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.btnReimport = new System.Windows.Forms.Button();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
@@ -303,6 +304,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnReimport);
             this.groupBox1.Controls.Add(label4);
             this.groupBox1.Controls.Add(this.comboBoxLowcase);
             this.groupBox1.Controls.Add(label3);
@@ -422,6 +424,16 @@
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
             this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
+            // btnReimport
+            // 
+            this.btnReimport.Location = new System.Drawing.Point(89, 171);
+            this.btnReimport.Name = "btnReimport";
+            this.btnReimport.Size = new System.Drawing.Size(75, 23);
+            this.btnReimport.TabIndex = 7;
+            this.btnReimport.Text = "Reimport";
+            this.btnReimport.UseVisualStyleBackColor = true;
+            this.btnReimport.Click += new System.EventHandler(this.btnReimport_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -483,5 +495,6 @@
         private System.Windows.Forms.ToolStripButton btnSaveSQL;
         private System.Windows.Forms.ToolStripButton btnSaveJson;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.Button btnReimport;
     }
 }
