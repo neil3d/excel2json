@@ -17,6 +17,7 @@ namespace excel2json {
                 return mContext;
             }
         }
+        private int endColumn;//结束列，回避空列
 
         /// <summary>
         /// 构造函数：完成内部数据创建
@@ -28,6 +29,17 @@ namespace excel2json {
                 return;
             if (sheet.Rows.Count <= 0)
                 return;
+
+            DataRow firstRow = sheet.Rows[0];
+            foreach (DataColumn column in sheet.Columns)
+            {
+                object value = firstRow[column];
+                if (value is DBNull)
+                {
+                    break;
+                }
+                endColumn++;
+            }
 
             //-- 转换为JSON字符串
             if (exportArray) {
@@ -41,12 +53,13 @@ namespace excel2json {
         private void convertArray(DataTable sheet, int headerRows, bool lowcase) {
             List<object> values = new List<object>();
 
+            //TODO 加类型检查
+
             int firstDataRow = headerRows - 1;
             for (int i = firstDataRow; i < sheet.Rows.Count; i++) {
-                DataRow row = sheet.Rows[i];
-
+                DataRow row = sheet.Rows[i];               
                 values.Add(
-                    convertRowData(sheet, row, lowcase, firstDataRow)
+                    convertRowData(sheet, row, lowcase, firstDataRow,endColumn)
                     );
             }
 
@@ -68,7 +81,7 @@ namespace excel2json {
                 if (ID.Length <= 0)
                     ID = string.Format("row_{0}", i);
 
-                importData[ID] = convertRowData(sheet, row, lowcase, firstDataRow);
+                importData[ID] = convertRowData(sheet, row, lowcase, firstDataRow,endColumn);
             }
 
             //-- convert to json string
@@ -78,16 +91,19 @@ namespace excel2json {
         /// <summary>
         /// 把一行数据转换成一个对象，每一列是一个属性
         /// </summary>
-        private object convertRowData(DataTable sheet, DataRow row, bool lowcase, int firstDataRow) {
+        private object convertRowData(DataTable sheet, DataRow row, bool lowcase, int firstDataRow,int endColumn) {
             var rowData = new Dictionary<string, object>();
             int col = 0;
             foreach (DataColumn column in sheet.Columns) {
                 object value = row[column];
 
-                if (value.GetType() == typeof(System.DBNull)) {
+                if(col>=endColumn){
+                    break;
+                }
+                if (value is System.DBNull) {
                     value = getColumnDefault(sheet, column, firstDataRow);
                 }
-                else if (value.GetType() == typeof(double)) { // 去掉数值字段的“.0”
+                else if (value is double) { // 去掉数值字段的“.0”
                     double num = (double)value;
                     if ((int)num == num)
                         value = (int)num;
