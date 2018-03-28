@@ -41,15 +41,15 @@ namespace excel2json {
                         DateTime endTime = DateTime.Now;
                         TimeSpan dur = endTime - startTime;
                         Console.WriteLine(
-                            string.Format("[{0}]：\tConversion complete in [{1}ms].",
-                            Path.GetFileName(options.ExcelPath),
-                            dur.TotalMilliseconds)
-                            );
+                            $@"[{Path.GetFileName(options.ExcelPath)}]：	Conversion complete in [{dur.TotalMilliseconds}ms]."
+                        );
                     }
                     catch (Exception exp) {
                         Console.WriteLine("Error: " + exp.Message);
                     }
                 }
+                Console.WriteLine(@"json 文件生成完毕");
+                Console.ReadKey();
             }// end of else
         }
 
@@ -83,7 +83,7 @@ namespace excel2json {
 
                                     // Gets or sets a value indicating whether to use a row from the 
                                     // data as column names.
-                                    UseHeaderRow = true,
+                                    UseHeaderRow = false,
 
                                     // Gets or sets a callback to determine which row is the header row. 
                                     // Only called when UseHeaderRow = true.
@@ -95,10 +95,7 @@ namespace excel2json {
 
                                     // Gets or sets a callback to determine whether to include the 
                                     // current row in the DataTable.
-                                    FilterRow = (rowReader) =>
-                                    {
-                                        return true;
-                                    },
+                                    FilterRow = (rowReader) => true,
 
                                     // Gets or sets a callback to determine whether to include the specific
                                     // column in the DataTable. Called once per column after reading the 
@@ -118,32 +115,39 @@ namespace excel2json {
                                 throw new Exception("Excel file is empty: " + excelPath);
                             }
 
-                            // 取得数据
-                            DataTable sheet = book.Tables[0];
-                            if (sheet.Rows.Count <= 0)
+                            for (int i = 0; i < book.Tables.Count; i++)
                             {
-                                throw new Exception("Excel Sheet is empty: " + excelPath);
-                            }
-
-                            //-- 确定编码
-                            Encoding cd = new UTF8Encoding(false);
-                            if (options.Encoding != "utf8-nobom")
-                            {
-                                foreach (EncodingInfo ei in Encoding.GetEncodings())
+                                // 取得数据
+                                DataTable sheet = book.Tables[i];
+                                if (sheet.Rows.Count <= 0)
                                 {
-                                    Encoding e = ei.GetEncoding();
-                                    if (e.HeaderName == options.Encoding)
+                                    throw new Exception("Excel Sheet is empty: " + excelPath);
+                                }
+
+                                if (sheet.TableName.StartsWith("#"))//sheet头加#的不读
+                                {
+                                    continue;
+                                }
+                                //-- 确定编码
+                                Encoding cd = new UTF8Encoding(false);
+                                if (options.Encoding != "utf8-nobom")
+                                {
+                                    foreach (EncodingInfo ei in Encoding.GetEncodings())
                                     {
-                                        cd = e;
-                                        break;
+                                        Encoding e = ei.GetEncoding();
+                                        if (e.HeaderName == options.Encoding)
+                                        {
+                                            cd = e;
+                                            break;
+                                        }
                                     }
                                 }
-                            }
 
-                            //-- 导出JSON文件
-                            //if (options.JsonPath != null && options.JsonPath.Length > 0) {
-                            JsonExporter exporter = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray);
-                            exporter.SaveToFile(options.JsonPath +"/"+sheet.TableName+".json", cd);
+                                //-- 导出JSON文件
+                                //if (options.JsonPath != null && options.JsonPath.Length > 0) {
+                                JsonExporter exporter = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray);
+                                exporter.SaveToFile(options.JsonPath + "/" + sheet.TableName + ".json", cd);
+                            }
                             //}
                             /*
                     //-- 导出SQL文件
