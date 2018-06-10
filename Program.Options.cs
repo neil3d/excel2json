@@ -17,8 +17,7 @@ namespace excel2json {
 
             [Option('e', "excel", Required = true, HelpText = "input excel file path.")]
             public string ExcelPath {
-                get;
-                set;
+                get;set;
             }
 
             [Option('j', "json", Required = false, HelpText = "export json file path.")]

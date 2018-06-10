@@ -1,0 +1,16 @@
+﻿<Properties StartupConfiguration="{3F3729F4-9C16-40FB-956D-BE6C18C1A418}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="JsonExporter.cs">
+    <Files>
+      <File FileName="JsonExporter.cs" Line="95" Column="60" />
+      <File FileName="Program.cs" Line="87" Column="37" />
+      <File FileName="Program.Options.cs" Line="45" Column="14" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.excel2json PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>
