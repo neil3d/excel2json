@@ -181,4 +181,3 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
-/.vs/excel2json/v15/Server/sqlite3

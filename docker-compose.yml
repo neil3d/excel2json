@@ -1,8 +1,0 @@
-version: '3'
-
-services:
-  excel2json:
-    image: excel2json
-    build:
-      context: .
-      dockerfile: Dockerfile
