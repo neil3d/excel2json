@@ -29,6 +29,9 @@ namespace excel2json.GUI {
         // 导出数据相关的按钮，方便整体Enable/Disable
         private List<ToolStripButton> mExportButtonList;
 
+        // 打开的excel文件名，不包含后缀xlsx。。。
+        private String FileName; 
+
         /// <summary>
         /// 构造函数，初始化控件初值；创建文本框
         /// </summary>
@@ -114,6 +117,7 @@ namespace excel2json.GUI {
         private void loadExcelAsync(string path) {
 
             mCurrentXlsx = path;
+            FileName = System.IO.Path.GetFileNameWithoutExtension(path);
 
             //-- update ui
             this.btnReimport.Enabled = true;
@@ -161,6 +165,7 @@ namespace excel2json.GUI {
                 if (dropData != null && dropData.Length > 0) {
                     string szPath = dropData[0];
                     string szExt = System.IO.Path.GetExtension(szPath);
+                    FileName = System.IO.Path.GetFileNameWithoutExtension(szPath);
                     szExt = szExt.ToLower();
                     if (szExt == ".xlsx") {
                         e.Effect = DragDropEffects.All;
@@ -234,6 +239,7 @@ namespace excel2json.GUI {
                 SaveFileDialog dlg = new SaveFileDialog();
                 dlg.RestoreDirectory = true;
                 dlg.Filter = filter;
+                dlg.FileName = FileName;
                 if (dlg.ShowDialog() == DialogResult.OK) {
                     lock (mDataMgr) {
                         switch (type) {
