@@ -43,7 +43,7 @@ namespace excel2json {
             else { // mutiple sheet
 
                 Dictionary<string, object> data = new Dictionary<string, object>();
-                foreach(var sheet in validSheets) {
+                foreach (var sheet in validSheets) {
                     object sheetValue = convertSheet(sheet, exportArray, lowcase);
                     data.Add(sheet.TableName, sheetValue);
                 }
@@ -70,7 +70,7 @@ namespace excel2json {
                 DataRow row = sheet.Rows[i];
 
                 values.Add(
-                    convertRowData(sheet, row, lowcase, firstDataRow)
+                    convertRowToDict(sheet, row, lowcase, firstDataRow)
                     );
             }
 
@@ -91,7 +91,9 @@ namespace excel2json {
                 if (ID.Length <= 0)
                     ID = string.Format("row_{0}", i);
 
-                importData[ID] = convertRowData(sheet, row, lowcase, firstDataRow);
+                var rowObject = convertRowToDict(sheet, row, lowcase, firstDataRow);
+                rowObject[ID] = ID;
+                importData[ID] = rowObject;
             }
 
             return importData;
@@ -100,7 +102,7 @@ namespace excel2json {
         /// <summary>
         /// 把一行数据转换成一个对象，每一列是一个属性
         /// </summary>
-        private object convertRowData(DataTable sheet, DataRow row, bool lowcase, int firstDataRow) {
+        private Dictionary<string, object> convertRowToDict(DataTable sheet, DataRow row, bool lowcase, int firstDataRow) {
             var rowData = new Dictionary<string, object>();
             int col = 0;
             foreach (DataColumn column in sheet.Columns) {
