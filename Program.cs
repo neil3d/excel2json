@@ -26,7 +26,7 @@ namespace excel2json {
             }
             else {
                 //-- COMMAND LINE MODE -------------------------------------------------
-                
+
                 //-- 分析命令行参数
                 var options = new Options();
                 var parser = new CommandLine.Parser(with => with.HelpWriter = Console.Error);
@@ -94,10 +94,15 @@ namespace excel2json {
                 }
 
                 //-- 导出JSON文件
+                string exportPath;
                 if (options.JsonPath != null && options.JsonPath.Length > 0) {
-                    JsonExporter exporter = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray);
-                    exporter.SaveToFile(options.JsonPath, cd);
+                    exportPath = options.JsonPath;
                 }
+                else {
+                    exportPath = Path.ChangeExtension(excelPath, ".json");
+                }
+                JsonExporter exporter = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray);
+                exporter.SaveToFile(exportPath, cd);
             }
         }
     }

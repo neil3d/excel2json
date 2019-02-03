@@ -27,7 +27,7 @@ namespace excel2json {
                 set;
             }
 
-            [Option('h', "header", Required = true, HelpText = "number lines in sheet as header.")]
+            [Option('h', "header", Required = false, DefaultValue = 1, HelpText = "number lines in sheet as header.")]
             public int HeaderRows {
                 get;
                 set;

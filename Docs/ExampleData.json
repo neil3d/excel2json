@@ -1,0 +1,67 @@
+{
+  "string": {
+    "ID": "string",
+    "Name": "string",
+    "AssetName": "string",
+    "HP": "int",
+    "Attack": "int",
+    "Defence": "int",
+    "ActPoints": "int",
+    "ActSpeed": "int",
+    "Hit": "int",
+    "Dodge": "int",
+    "Critical": "int"
+  },
+  "编号": {
+    "ID": "编号",
+    "Name": "名称",
+    "AssetName": "资源编号",
+    "HP": "血",
+    "Attack": "攻击",
+    "Defence": "防御",
+    "ActPoints": "战力",
+    "ActSpeed": "身法",
+    "Hit": "命中",
+    "Dodge": "闪避",
+    "Critical": "暴击"
+  },
+  "BS001": {
+    "ID": "BS001",
+    "Name": "鬼道士",
+    "AssetName": "BS001",
+    "HP": 100,
+    "Attack": 15,
+    "Defence": 0,
+    "ActPoints": 5,
+    "ActSpeed": 1.5,
+    "Hit": 8,
+    "Dodge": 0,
+    "Critical": 8
+  },
+  "BS002": {
+    "ID": "BS002",
+    "Name": "钟馗",
+    "AssetName": "BS002",
+    "HP": 352,
+    "Attack": 22,
+    "Defence": 3,
+    "ActPoints": 32,
+    "ActSpeed": 4,
+    "Hit": 3,
+    "Dodge": 4,
+    "Critical": 2
+  },
+  "BS003": {
+    "ID": "BS003",
+    "Name": "",
+    "AssetName": "BS003",
+    "HP": 332,
+    "Attack": 3,
+    "Defence": 44,
+    "ActPoints": 432,
+    "ActSpeed": 4,
+    "Hit": 3,
+    "Dodge": 4,
+    "Critical": 2
+  }
+}
