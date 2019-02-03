@@ -76,6 +76,9 @@ namespace excel2json {
                 }
             }
 
+            //-- Date Format
+            string dateFormat = options.DateFormat;
+
             //-- Export path
             string exportPath;
             if (options.JsonPath != null && options.JsonPath.Length > 0) {
@@ -89,7 +92,7 @@ namespace excel2json {
             ExcelLoader excel = new ExcelLoader(excelPath, header);
 
             //-- export
-            JsonExporter exporter = new JsonExporter(excel, options.Lowcase, options.ExportArray);
+            JsonExporter exporter = new JsonExporter(excel, options.Lowcase, options.ExportArray, dateFormat);
             exporter.SaveToFile(exportPath, cd);
         }
     }

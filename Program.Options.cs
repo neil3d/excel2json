@@ -50,6 +50,12 @@ namespace excel2json {
                 get;
                 set;
             }
+
+            [Option('d', "date", Required = false, DefaultValue = "yyyy/mm/dd", HelpText = "Date Format String, example: dd / MM / yyy hh: mm:ss.")]
+            public string DateFormat {
+                get;
+                set;
+            }
         }
     }
 }

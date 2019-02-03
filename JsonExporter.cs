@@ -22,7 +22,7 @@ namespace excel2json {
         /// 构造函数：完成内部数据创建
         /// </summary>
         /// <param name="excel">ExcelLoader Object</param>
-        public JsonExporter(ExcelLoader excel, bool lowcase, bool exportArray) {
+        public JsonExporter(ExcelLoader excel, bool lowcase, bool exportArray, string dateFormat) {
 
             List<DataTable> validSheets = new List<DataTable>();
             for (int i = 0; i < excel.Sheets.Count; i++) {
@@ -32,13 +32,18 @@ namespace excel2json {
                     validSheets.Add(sheet);
             }
 
+            var jsonSettings = new JsonSerializerSettings {
+                DateFormatString = dateFormat,
+                Formatting = Formatting.Indented
+            };
+
             if (validSheets.Count == 1) {   // single sheet
 
                 //-- convert to object
                 object sheetValue = convertSheet(validSheets[0], exportArray, lowcase);
 
                 //-- convert to json string
-                mContext = JsonConvert.SerializeObject(sheetValue, Formatting.Indented);
+                mContext = JsonConvert.SerializeObject(sheetValue, jsonSettings);
             }
             else { // mutiple sheet
 
@@ -49,7 +54,7 @@ namespace excel2json {
                 }
 
                 //-- convert to json string
-                mContext = JsonConvert.SerializeObject(data, Formatting.Indented);
+                mContext = JsonConvert.SerializeObject(data, jsonSettings);
             }
         }
 

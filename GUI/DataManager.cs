@@ -69,7 +69,7 @@ namespace excel2json.GUI {
             ExcelLoader excel = new ExcelLoader(excelPath, header);
 
             //-- 导出JSON
-            mJson = new JsonExporter(excel, options.Lowcase, options.ExportArray);
+            mJson = new JsonExporter(excel, options.Lowcase, options.ExportArray, "yyyy/mm/dd");
         }
     }
 }
