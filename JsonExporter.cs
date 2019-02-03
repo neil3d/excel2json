@@ -59,15 +59,13 @@ namespace excel2json {
         }
 
         private object convertSheet(DataTable sheet, bool exportArray, bool lowcase) {
-            if (exportArray) {
-                return convertArray(sheet, lowcase);
-            }
-            else {
-                return convertDict(sheet, lowcase);
-            }
+            if (exportArray)
+                return convertSheetToArray(sheet, lowcase);
+            else
+                return convertSheetToDict(sheet, lowcase);
         }
 
-        private object convertArray(DataTable sheet, bool lowcase) {
+        private object convertSheetToArray(DataTable sheet, bool lowcase) {
             List<object> values = new List<object>();
 
             int firstDataRow = 0;
@@ -85,7 +83,7 @@ namespace excel2json {
         /// <summary>
         /// 以第一列为ID，转换成ID->Object的字典对象
         /// </summary>
-        private object convertDict(DataTable sheet, bool lowcase) {
+        private object convertSheetToDict(DataTable sheet, bool lowcase) {
             Dictionary<string, object> importData =
                 new Dictionary<string, object>();
 
