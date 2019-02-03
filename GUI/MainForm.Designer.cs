@@ -27,6 +27,7 @@
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label4;
             System.Windows.Forms.Label label3;
+            System.Windows.Forms.Label label5;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -44,18 +45,20 @@
             this.pictureBoxExcel = new System.Windows.Forms.PictureBox();
             this.labelExcelFile = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBoxDateFormat = new System.Windows.Forms.ComboBox();
             this.btnReimport = new System.Windows.Forms.Button();
             this.comboBoxLowcase = new System.Windows.Forms.ComboBox();
             this.comboBoxHeader = new System.Windows.Forms.ComboBox();
             this.comboBoxEncoding = new System.Windows.Forms.ComboBox();
             this.comboBoxType = new System.Windows.Forms.ComboBox();
-            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.tabControlCode = new System.Windows.Forms.TabControl();
             this.tabPageJSON = new System.Windows.Forms.TabPage();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -72,7 +75,7 @@
             // 
             // label2
             // 
-            label2.Location = new System.Drawing.Point(6, 59);
+            label2.Location = new System.Drawing.Point(6, 49);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(77, 12);
             label2.TabIndex = 1;
@@ -91,7 +94,7 @@
             // 
             // label4
             // 
-            label4.Location = new System.Drawing.Point(6, 93);
+            label4.Location = new System.Drawing.Point(6, 75);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(77, 12);
             label4.TabIndex = 6;
@@ -100,12 +103,21 @@
             // 
             // label3
             // 
-            label3.Location = new System.Drawing.Point(6, 131);
+            label3.Location = new System.Drawing.Point(6, 101);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(77, 12);
             label3.TabIndex = 4;
             label3.Text = "Header:";
             label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label5
+            // 
+            label5.Location = new System.Drawing.Point(6, 127);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(77, 12);
+            label5.TabIndex = 9;
+            label5.Text = "Date Format:";
+            label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // statusStrip
             // 
@@ -276,6 +288,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.AutoSize = true;
+            this.groupBox1.Controls.Add(label5);
+            this.groupBox1.Controls.Add(this.comboBoxDateFormat);
             this.groupBox1.Controls.Add(this.btnReimport);
             this.groupBox1.Controls.Add(label4);
             this.groupBox1.Controls.Add(this.comboBoxLowcase);
@@ -289,14 +304,27 @@
             this.groupBox1.Location = new System.Drawing.Point(8, 236);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(245, 200);
+            this.groupBox1.Size = new System.Drawing.Size(245, 210);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Options";
             // 
+            // comboBoxDateFormat
+            // 
+            this.comboBoxDateFormat.DisplayMember = "0";
+            this.comboBoxDateFormat.FormattingEnabled = true;
+            this.comboBoxDateFormat.Items.AddRange(new object[] {
+            "yyyy/MM/dd",
+            "yyyy/MM/dd hh:mm:ss"});
+            this.comboBoxDateFormat.Location = new System.Drawing.Point(89, 124);
+            this.comboBoxDateFormat.Name = "comboBoxDateFormat";
+            this.comboBoxDateFormat.Size = new System.Drawing.Size(150, 20);
+            this.comboBoxDateFormat.TabIndex = 8;
+            this.comboBoxDateFormat.ValueMember = "0";
+            // 
             // btnReimport
             // 
-            this.btnReimport.Location = new System.Drawing.Point(89, 171);
+            this.btnReimport.Location = new System.Drawing.Point(70, 167);
             this.btnReimport.Name = "btnReimport";
             this.btnReimport.Size = new System.Drawing.Size(75, 23);
             this.btnReimport.TabIndex = 7;
@@ -312,7 +340,7 @@
             this.comboBoxLowcase.Items.AddRange(new object[] {
             "Yes",
             "No"});
-            this.comboBoxLowcase.Location = new System.Drawing.Point(89, 90);
+            this.comboBoxLowcase.Location = new System.Drawing.Point(89, 72);
             this.comboBoxLowcase.Name = "comboBoxLowcase";
             this.comboBoxLowcase.Size = new System.Drawing.Size(150, 20);
             this.comboBoxLowcase.TabIndex = 5;
@@ -328,7 +356,7 @@
             "4",
             "5",
             "6"});
-            this.comboBoxHeader.Location = new System.Drawing.Point(89, 128);
+            this.comboBoxHeader.Location = new System.Drawing.Point(89, 98);
             this.comboBoxHeader.Name = "comboBoxHeader";
             this.comboBoxHeader.Size = new System.Drawing.Size(150, 20);
             this.comboBoxHeader.TabIndex = 3;
@@ -339,7 +367,7 @@
             this.comboBoxEncoding.DisplayMember = "0";
             this.comboBoxEncoding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxEncoding.FormattingEnabled = true;
-            this.comboBoxEncoding.Location = new System.Drawing.Point(89, 56);
+            this.comboBoxEncoding.Location = new System.Drawing.Point(89, 46);
             this.comboBoxEncoding.Name = "comboBoxEncoding";
             this.comboBoxEncoding.Size = new System.Drawing.Size(150, 20);
             this.comboBoxEncoding.TabIndex = 0;
@@ -358,11 +386,6 @@
             this.comboBoxType.Size = new System.Drawing.Size(150, 20);
             this.comboBoxType.TabIndex = 0;
             this.comboBoxType.ValueMember = "0";
-            // 
-            // backgroundWorker
-            // 
-            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
-            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
             // tabControlCode
             // 
@@ -383,6 +406,11 @@
             this.tabPageJSON.TabIndex = 0;
             this.tabPageJSON.Text = "JSON";
             this.tabPageJSON.UseVisualStyleBackColor = true;
+            // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
             // MainForm
             // 
@@ -406,6 +434,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.panelExcelDropBox.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxExcel)).EndInit();
@@ -442,5 +471,6 @@
         private System.Windows.Forms.Button btnReimport;
         private System.Windows.Forms.TabControl tabControlCode;
         private System.Windows.Forms.TabPage tabPageJSON;
+        private System.Windows.Forms.ComboBox comboBoxDateFormat;
     }
 }
