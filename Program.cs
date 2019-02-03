@@ -98,18 +98,6 @@ namespace excel2json {
                     JsonExporter exporter = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray);
                     exporter.SaveToFile(options.JsonPath, cd);
                 }
-
-                //-- 导出SQL文件
-                if (options.SQLPath != null && options.SQLPath.Length > 0) {
-                    SQLExporter exporter = new SQLExporter(excelName, sheet, header);
-                    exporter.SaveToFile(options.SQLPath, cd);
-                }
-
-                //-- 生成C#定义文件
-                if (options.CSharpPath != null && options.CSharpPath.Length > 0) {
-                    CSDefineGenerator exporter = new CSDefineGenerator(excelName, sheet);
-                    exporter.SaveToFile(options.CSharpPath, cd);
-                }
             }
         }
     }

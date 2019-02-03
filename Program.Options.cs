@@ -27,18 +27,6 @@ namespace excel2json {
                 set;
             }
 
-            [Option('s', "sql", Required = false, HelpText = "export SQL file path.")]
-            public string SQLPath {
-                get;
-                set;
-            }
-
-            [Option('p', "csharp", Required = false, HelpText = "export C# data struct code file path.")]
-            public string CSharpPath {
-                get;
-                set;
-            }
-
             [Option('h', "header", Required = true, HelpText = "number lines in sheet as header.")]
             public int HeaderRows {
                 get;

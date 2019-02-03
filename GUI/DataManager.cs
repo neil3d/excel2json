@@ -17,8 +17,6 @@ namespace excel2json.GUI {
 
         // 导出数据
         private JsonExporter mJson;
-        private SQLExporter mSQL;
-        private CSDefineGenerator mCSharp;
 
         /// <summary>
         /// 导出的Json文本
@@ -27,30 +25,6 @@ namespace excel2json.GUI {
             get {
                 if (mJson != null)
                     return mJson.context;
-                else
-                    return "";
-            }
-        }
-
-        /// <summary>
-        /// 导出的SQL文本
-        /// </summary>
-        public string SQLContext {
-            get {
-                if (mSQL != null)
-                    return mSQL.structSQL + mSQL.contentSQL;
-                else
-                    return "";
-            }
-        }
-
-        /// <summary>
-        /// 导出的C#代码
-        /// </summary>
-        public string CSharpCode {
-            get {
-                if (mCSharp != null)
-                    return mCSharp.code;
                 else
                     return "";
             }
@@ -66,25 +40,6 @@ namespace excel2json.GUI {
             }
         }
 
-        /// <summary>
-        /// 保存SQL
-        /// </summary>
-        /// <param name="filePath">保存路径</param>
-        public void saveSQL(string filePath) {
-            if (mSQL != null) {
-                mSQL.SaveToFile(filePath, mEncoding);
-            }
-        }
-
-        /// <summary>
-        /// 保存C#代码
-        /// </summary>
-        /// <param name="filePath">保存路径</param>
-        public void saveCode(string filePath) {
-            if (mCSharp != null) {
-                mCSharp.SaveToFile(filePath, mEncoding);
-            }
-        }
 
         /// <summary>
         /// 加载Excel文件
@@ -131,12 +86,7 @@ namespace excel2json.GUI {
 
                 //-- 导出JSON
                 mJson = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray);
-
-                //-- 导出SQL
-                mSQL = new SQLExporter(excelName, sheet, header);
-
-                //-- 生成C#定义代码
-                mCSharp = new CSDefineGenerator(excelName, sheet);
+                
             }
         }
     }
