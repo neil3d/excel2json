@@ -24,23 +24,45 @@ namespace excel2json {
         /// <param name="excel">ExcelLoader Object</param>
         public JsonExporter(ExcelLoader excel, bool lowcase, bool exportArray) {
 
-            DataTable sheet = excel.Sheets[0];
+            List<DataTable> validSheets = new List<DataTable>();
+            for (int i = 0; i < excel.Sheets.Count; i++) {
+                DataTable sheet = excel.Sheets[i];
 
-            if (sheet.Columns.Count <= 0)
-                return;
-            if (sheet.Rows.Count <= 0)
-                return;
-
-            //-- 转换为JSON字符串
-            if (exportArray) {
-                convertArray(sheet, lowcase);
+                if (sheet.Columns.Count > 0 && sheet.Rows.Count > 0)
+                    validSheets.Add(sheet);
             }
-            else {
-                convertDict(sheet, lowcase);
+
+            if (validSheets.Count == 1) {   // single sheet
+
+                //-- convert to object
+                object sheetValue = convertSheet(validSheets[0], exportArray, lowcase);
+
+                //-- convert to json string
+                mContext = JsonConvert.SerializeObject(sheetValue, Formatting.Indented);
+            }
+            else { // mutiple sheet
+
+                Dictionary<string, object> data = new Dictionary<string, object>();
+                foreach(var sheet in validSheets) {
+                    object sheetValue = convertSheet(sheet, exportArray, lowcase);
+                    data.Add(sheet.TableName, sheetValue);
+                }
+
+                //-- convert to json string
+                mContext = JsonConvert.SerializeObject(data, Formatting.Indented);
             }
         }
 
-        private void convertArray(DataTable sheet, bool lowcase) {
+        private object convertSheet(DataTable sheet, bool exportArray, bool lowcase) {
+            if (exportArray) {
+                return convertArray(sheet, lowcase);
+            }
+            else {
+                return convertDict(sheet, lowcase);
+            }
+        }
+
+        private object convertArray(DataTable sheet, bool lowcase) {
             List<object> values = new List<object>();
 
             int firstDataRow = 0;
@@ -52,14 +74,13 @@ namespace excel2json {
                     );
             }
 
-            //-- convert to json string
-            mContext = JsonConvert.SerializeObject(values, Formatting.Indented);
+            return values;
         }
 
         /// <summary>
         /// 以第一列为ID，转换成ID->Object的字典对象
         /// </summary>
-        private void convertDict(DataTable sheet, bool lowcase) {
+        private object convertDict(DataTable sheet, bool lowcase) {
             Dictionary<string, object> importData =
                 new Dictionary<string, object>();
 
@@ -73,8 +94,7 @@ namespace excel2json {
                 importData[ID] = convertRowData(sheet, row, lowcase, firstDataRow);
             }
 
-            //-- convert to json string
-            mContext = JsonConvert.SerializeObject(importData, Formatting.Indented);
+            return importData;
         }
 
         /// <summary>
