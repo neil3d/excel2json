@@ -10,6 +10,8 @@ namespace excel2json {
     class ExcelLoader {
         private DataSet mData;
 
+        // TODO: add Sheet Struct Define
+
         public ExcelLoader(string filePath, int headerRow) {
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read)) {
                 // Auto-detect format, supports:
@@ -40,12 +42,10 @@ namespace excel2json {
                 // data as column names.
                 UseHeaderRow = true,
 
-                // Gets or sets a callback to determine which row is the header row. 
-                // Only called when UseHeaderRow = true.
-                ReadHeaderRow = (rowReader) => {
-                    // skip header row
-                    for (int i = 0; i < headerRow - 1; i++)
-                        rowReader.Read();
+                // Gets or sets a callback to determine whether to include the 
+                // current row in the DataTable.
+                FilterRow = (rowReader) => {
+                    return rowReader.Depth > headerRow - 1;
                 },
             };
 
