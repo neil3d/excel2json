@@ -1,4 +1,4 @@
-﻿using Excel;
+﻿using ExcelDataReader;
 using System;
 using System.Data;
 using System.IO;
@@ -10,7 +10,7 @@ namespace excel2json.GUI {
     /// 为GUI模式提供的整体数据管理
     /// </summary>
     class DataManager {
-      
+
         // 数据导入设置
         private Program.Options mOptions;
         private Encoding mEncoding;
@@ -47,47 +47,32 @@ namespace excel2json.GUI {
         /// <param name="options">导入设置</param>
         public void loadExcel(Program.Options options) {
             mOptions = options;
+
+            //-- Excel File
             string excelPath = options.ExcelPath;
             string excelName = Path.GetFileNameWithoutExtension(excelPath);
+
+            //-- Header
             int header = options.HeaderRows;
 
-            // 加载Excel文件
-            using (FileStream excelFile = File.Open(excelPath, FileMode.Open, FileAccess.Read)) {
-                // Reading from a OpenXml Excel file (2007 format; *.xlsx)
-                IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(excelFile);
-
-                // The result of each spreadsheet will be created in the result.Tables
-                excelReader.IsFirstRowAsColumnNames = true;
-                DataSet book = excelReader.AsDataSet();
-
-                // 数据检测
-                if (book.Tables.Count < 1) {
-                    throw new Exception("Excel file is empty: " + excelPath);
-                }
-
-                // 取得数据
-                DataTable sheet = book.Tables[0];
-                if (sheet.Rows.Count <= 0) {
-                    throw new Exception("Excel Sheet is empty: " + excelPath);
-                }
-
-                //-- 确定编码
-                Encoding cd = new UTF8Encoding(false);
-                if (options.Encoding != "utf8-nobom") {
-                    foreach (EncodingInfo ei in Encoding.GetEncodings()) {
-                        Encoding e = ei.GetEncoding();
-                        if (e.HeaderName == options.Encoding) {
-                            cd = e;
-                            break;
-                        }
+            //-- Encoding
+            Encoding cd = new UTF8Encoding(false);
+            if (options.Encoding != "utf8-nobom") {
+                foreach (EncodingInfo ei in Encoding.GetEncodings()) {
+                    Encoding e = ei.GetEncoding();
+                    if (e.HeaderName == options.Encoding) {
+                        cd = e;
+                        break;
                     }
                 }
-                mEncoding = cd;
-
-                //-- 导出JSON
-                mJson = new JsonExporter(sheet, header, options.Lowcase, options.ExportArray);
-                
             }
+            mEncoding = cd;
+
+            //-- Load Excel
+            ExcelLoader excel = new ExcelLoader(excelPath, header);
+
+            //-- 导出JSON
+            mJson = new JsonExporter(excel, options.Lowcase, options.ExportArray);
         }
     }
 }

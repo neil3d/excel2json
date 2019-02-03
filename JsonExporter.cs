@@ -21,9 +21,11 @@ namespace excel2json {
         /// <summary>
         /// 构造函数：完成内部数据创建
         /// </summary>
-        /// <param name="sheet">ExcelReader创建的一个表单</param>
-        /// <param name="headerRows">表单中的那几行是表头</param>
-        public JsonExporter(DataTable sheet, int headerRows, bool lowcase, bool exportArray) {
+        /// <param name="excel">ExcelLoader Object</param>
+        public JsonExporter(ExcelLoader excel, bool lowcase, bool exportArray) {
+
+            DataTable sheet = excel.Sheets[0];
+
             if (sheet.Columns.Count <= 0)
                 return;
             if (sheet.Rows.Count <= 0)
@@ -31,17 +33,17 @@ namespace excel2json {
 
             //-- 转换为JSON字符串
             if (exportArray) {
-                convertArray(sheet, headerRows, lowcase);
+                convertArray(sheet, lowcase);
             }
             else {
-                convertDict(sheet, headerRows, lowcase);
+                convertDict(sheet, lowcase);
             }
         }
 
-        private void convertArray(DataTable sheet, int headerRows, bool lowcase) {
+        private void convertArray(DataTable sheet, bool lowcase) {
             List<object> values = new List<object>();
 
-            int firstDataRow = headerRows - 1;
+            int firstDataRow = 0;
             for (int i = firstDataRow; i < sheet.Rows.Count; i++) {
                 DataRow row = sheet.Rows[i];
 
@@ -57,11 +59,11 @@ namespace excel2json {
         /// <summary>
         /// 以第一列为ID，转换成ID->Object的字典对象
         /// </summary>
-        private void convertDict(DataTable sheet, int headerRows, bool lowcase) {
+        private void convertDict(DataTable sheet, bool lowcase) {
             Dictionary<string, object> importData =
                 new Dictionary<string, object>();
 
-            int firstDataRow = headerRows - 1;
+            int firstDataRow = 0;
             for (int i = firstDataRow; i < sheet.Rows.Count; i++) {
                 DataRow row = sheet.Rows[i];
                 string ID = row[sheet.Columns[0]].ToString();
