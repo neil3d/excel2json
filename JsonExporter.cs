@@ -21,64 +21,91 @@ namespace excel2json {
         /// <summary>
         /// 构造函数：完成内部数据创建
         /// </summary>
-        /// <param name="sheet">ExcelReader创建的一个表单</param>
-        /// <param name="headerRows">表单中的那几行是表头</param>
-        public JsonExporter(DataTable sheet, int headerRows, bool lowcase, bool exportArray) {
-            if (sheet.Columns.Count <= 0)
-                return;
-            if (sheet.Rows.Count <= 0)
-                return;
+        /// <param name="excel">ExcelLoader Object</param>
+        public JsonExporter(ExcelLoader excel, bool lowcase, bool exportArray, string dateFormat) {
 
-            //-- 转换为JSON字符串
-            if (exportArray) {
-                convertArray(sheet, headerRows, lowcase);
+            List<DataTable> validSheets = new List<DataTable>();
+            for (int i = 0; i < excel.Sheets.Count; i++) {
+                DataTable sheet = excel.Sheets[i];
+
+                if (sheet.Columns.Count > 0 && sheet.Rows.Count > 0)
+                    validSheets.Add(sheet);
             }
-            else {
-                convertDict(sheet, headerRows, lowcase);
+
+            var jsonSettings = new JsonSerializerSettings {
+                DateFormatString = dateFormat,
+                Formatting = Formatting.Indented
+            };
+
+            if (validSheets.Count == 1) {   // single sheet
+
+                //-- convert to object
+                object sheetValue = convertSheet(validSheets[0], exportArray, lowcase);
+
+                //-- convert to json string
+                mContext = JsonConvert.SerializeObject(sheetValue, jsonSettings);
+            }
+            else { // mutiple sheet
+
+                Dictionary<string, object> data = new Dictionary<string, object>();
+                foreach (var sheet in validSheets) {
+                    object sheetValue = convertSheet(sheet, exportArray, lowcase);
+                    data.Add(sheet.TableName, sheetValue);
+                }
+
+                //-- convert to json string
+                mContext = JsonConvert.SerializeObject(data, jsonSettings);
             }
         }
 
-        private void convertArray(DataTable sheet, int headerRows, bool lowcase) {
+        private object convertSheet(DataTable sheet, bool exportArray, bool lowcase) {
+            if (exportArray)
+                return convertSheetToArray(sheet, lowcase);
+            else
+                return convertSheetToDict(sheet, lowcase);
+        }
+
+        private object convertSheetToArray(DataTable sheet, bool lowcase) {
             List<object> values = new List<object>();
 
-            int firstDataRow = headerRows - 1;
+            int firstDataRow = 0;
             for (int i = firstDataRow; i < sheet.Rows.Count; i++) {
                 DataRow row = sheet.Rows[i];
 
                 values.Add(
-                    convertRowData(sheet, row, lowcase, firstDataRow)
+                    convertRowToDict(sheet, row, lowcase, firstDataRow)
                     );
             }
 
-            //-- convert to json string
-            mContext = JsonConvert.SerializeObject(values, Formatting.Indented);
+            return values;
         }
 
         /// <summary>
         /// 以第一列为ID，转换成ID->Object的字典对象
         /// </summary>
-        private void convertDict(DataTable sheet, int headerRows, bool lowcase) {
+        private object convertSheetToDict(DataTable sheet, bool lowcase) {
             Dictionary<string, object> importData =
                 new Dictionary<string, object>();
 
-            int firstDataRow = headerRows - 1;
+            int firstDataRow = 0;
             for (int i = firstDataRow; i < sheet.Rows.Count; i++) {
                 DataRow row = sheet.Rows[i];
                 string ID = row[sheet.Columns[0]].ToString();
                 if (ID.Length <= 0)
                     ID = string.Format("row_{0}", i);
 
-                importData[ID] = convertRowData(sheet, row, lowcase, firstDataRow);
+                var rowObject = convertRowToDict(sheet, row, lowcase, firstDataRow);
+                rowObject[ID] = ID;
+                importData[ID] = rowObject;
             }
 
-            //-- convert to json string
-            mContext = JsonConvert.SerializeObject(importData, Formatting.Indented);
+            return importData;
         }
 
         /// <summary>
         /// 把一行数据转换成一个对象，每一列是一个属性
         /// </summary>
-        private object convertRowData(DataTable sheet, DataRow row, bool lowcase, int firstDataRow) {
+        private Dictionary<string, object> convertRowToDict(DataTable sheet, DataRow row, bool lowcase, int firstDataRow) {
             var rowData = new Dictionary<string, object>();
             int col = 0;
             foreach (DataColumn column in sheet.Columns) {

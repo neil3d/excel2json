@@ -1,0 +1,60 @@
+{
+  "NPC": {
+    "BS001": {
+      "ID": "BS001",
+      "Name": "鬼道士",
+      "AssetName": "BS001",
+      "HP": 100,
+      "Attack": 15,
+      "Defence": 0,
+      "ActPoints": 5,
+      "ActSpeed": 1.5,
+      "Hit": 8,
+      "Dodge": 0,
+      "Critical": 8,
+      "BS001": "BS001"
+    },
+    "BS002": {
+      "ID": "BS002",
+      "Name": "钟馗",
+      "AssetName": "BS002",
+      "HP": 352,
+      "Attack": 22,
+      "Defence": 3,
+      "ActPoints": 32,
+      "ActSpeed": 4,
+      "Hit": 3,
+      "Dodge": 4,
+      "Critical": 2,
+      "BS002": "BS002"
+    },
+    "BS003": {
+      "ID": "BS003",
+      "Name": "",
+      "AssetName": "BS003",
+      "HP": 332,
+      "Attack": 3,
+      "Defence": 44,
+      "ActPoints": 432,
+      "ActSpeed": 4,
+      "Hit": 3,
+      "Dodge": 4,
+      "Critical": 2,
+      "BS003": "BS003"
+    }
+  },
+  "Item": {
+    "WP001": {
+      "ID": "WP001",
+      "Name": "倚天剑",
+      "AssetName": "ICON01",
+      "WP001": "WP001"
+    },
+    "WP002": {
+      "ID": "WP002",
+      "Name": "屠龙刀",
+      "AssetName": "ICON02",
+      "WP002": "WP002"
+    }
+  }
+}

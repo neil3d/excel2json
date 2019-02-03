@@ -27,19 +27,7 @@ namespace excel2json {
                 set;
             }
 
-            [Option('s', "sql", Required = false, HelpText = "export SQL file path.")]
-            public string SQLPath {
-                get;
-                set;
-            }
-
-            [Option('p', "csharp", Required = false, HelpText = "export C# data struct code file path.")]
-            public string CSharpPath {
-                get;
-                set;
-            }
-
-            [Option('h', "header", Required = true, HelpText = "number lines in sheet as header.")]
+            [Option('h', "header", Required = false, DefaultValue = 1, HelpText = "number lines in sheet as header.")]
             public int HeaderRows {
                 get;
                 set;
@@ -59,6 +47,12 @@ namespace excel2json {
 
             [Option('a', "array", Required = false, DefaultValue = false, HelpText = "export as array, otherwise as dict object.")]
             public bool ExportArray {
+                get;
+                set;
+            }
+
+            [Option('d', "date", Required = false, DefaultValue = "yyyy/MM/dd", HelpText = "Date Format String, example: dd / MM / yyy hh: mm:ss.")]
+            public string DateFormat {
                 get;
                 set;
             }

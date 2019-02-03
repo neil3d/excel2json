@@ -18,8 +18,6 @@ namespace excel2json.GUI {
 
         // 支持语法高亮的文本框
         private FastColoredTextBox mJsonTextBox;
-        private FastColoredTextBox mSQLTextBox;
-        private FastColoredTextBox mCodeTextBox;
 
         // 文本框的样式
         private TextStyle mBrownStyle = new TextStyle(Brushes.Brown, null, FontStyle.Regular);
@@ -43,16 +41,11 @@ namespace excel2json.GUI {
             mJsonTextBox.Language = Language.Custom;
             mJsonTextBox.TextChanged += new EventHandler<TextChangedEventArgs>(this.jsonTextChanged);
 
-            mSQLTextBox = createTextBoxInTab(this.tabPageSQL);
-            mSQLTextBox.Language = Language.SQL;
-
-            mCodeTextBox = createTextBoxInTab(this.tabPageCode);
-            mCodeTextBox.Language = Language.CSharp;
-
             //-- componet init states
             this.comboBoxType.SelectedIndex = 0;
             this.comboBoxLowcase.SelectedIndex = 1;
             this.comboBoxHeader.SelectedIndex = 1;
+            this.comboBoxDateFormat.SelectedIndex = 0;
 
             this.comboBoxEncoding.Items.Clear();
             this.comboBoxEncoding.Items.Add("utf8-nobom");
@@ -66,8 +59,6 @@ namespace excel2json.GUI {
             mExportButtonList = new List<ToolStripButton>();
             mExportButtonList.Add(this.btnCopyJSON);
             mExportButtonList.Add(this.btnSaveJson);
-            mExportButtonList.Add(this.btnSaveSQL);
-            mExportButtonList.Add(this.btnSaveCSharp);
             enableExportButtons(false);
 
             //-- data manager
@@ -134,6 +125,7 @@ namespace excel2json.GUI {
             options.Encoding = this.comboBoxEncoding.SelectedText;
             options.Lowcase = this.comboBoxLowcase.SelectedIndex == 0;
             options.HeaderRows = int.Parse(this.comboBoxHeader.Text);
+            options.DateFormat = this.comboBoxDateFormat.Text;
 
             //-- start import
             this.backgroundWorker.RunWorkerAsync(options);
@@ -202,8 +194,6 @@ namespace excel2json.GUI {
                 this.statusLabel.Text = "Load completed.";
 
                 mJsonTextBox.Text = mDataMgr.JsonContext;
-                mSQLTextBox.Text = mDataMgr.SQLContext;
-                mCodeTextBox.Text = mDataMgr.CSharpCode;
 
                 enableExportButtons(true);
             }
@@ -246,12 +236,6 @@ namespace excel2json.GUI {
                             case 1:
                                 mDataMgr.saveJson(dlg.FileName);
                                 break;
-                            case 2:
-                                mDataMgr.saveSQL(dlg.FileName);
-                                break;
-                            case 3:
-                                mDataMgr.saveCode(dlg.FileName);
-                                break;
                         }
                     }
                     showStatus(string.Format("{0} saved!", dlg.FileName), Color.Black);
@@ -267,21 +251,6 @@ namespace excel2json.GUI {
         /// </summary>
         private void btnSaveJson_Click(object sender, EventArgs e) {
             saveToFile(1, "Json File(*.json)|*.json");
-        }
-
-        /// <summary>
-        /// 工具栏按钮：Save SQL
-        /// </summary>
-        private void btnSaveSQL_Click(object sender, EventArgs e) {
-            saveToFile(2, "SQL File(*.sql)|*.sql");
-
-        }
-
-        /// <summary>
-        /// 工具栏按钮：Save C#
-        /// </summary>
-        private void btnSaveCSharp_Click(object sender, EventArgs e) {
-            saveToFile(3, "C# Code File(*.cs)|*.cs");
         }
 
         /// <summary>
