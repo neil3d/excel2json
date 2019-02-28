@@ -1,6 +1,6 @@
 # excel2json
 
-详细帮助文档请见：[https://neil3d.github.io/app/excel2json.html](https://neil3d.github.io/app/excel2json.html)
+详细帮助文档请见：[https://neil3d.github.io/coding/excel2json.html](https://neil3d.github.io/coding/excel2json.html)
 
 ## 命令行参数
 
