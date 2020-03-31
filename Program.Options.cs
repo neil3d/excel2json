@@ -13,6 +13,7 @@ namespace excel2json {
                 this.Encoding = "utf8-nobom";
                 this.Lowcase = false;
                 this.ExportArray = false;
+                this.ForceSheetName = false;
             }
 
             [Option('e', "excel", Required = true, HelpText = "input excel file path.")]
@@ -53,6 +54,13 @@ namespace excel2json {
 
             [Option('d', "date", Required = false, DefaultValue = "yyyy/MM/dd", HelpText = "Date Format String, example: dd / MM / yyy hh: mm:ss.")]
             public string DateFormat {
+                get;
+                set;
+            }
+
+            [Option('s', "sheet", Required = false, DefaultValue = false, HelpText = "export with sheet name, even there's only one sheet.")]
+            public bool ForceSheetName
+            {
                 get;
                 set;
             }

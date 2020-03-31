@@ -11,6 +11,7 @@
 * -l, –lowcase (Default: false) 自动把字段名称转换成小写格式.
 * -a 序列化成数组
 * -d, --date:指定日期格式化字符串，例如：dd / MM / yyy hh: mm:ss
+* -s 序列化时强制带上sheet name，即使只有一个sheet
 
 ![COVER](https://neil3d.github.io/assets/img/excel2json/cover.jpg)  
 

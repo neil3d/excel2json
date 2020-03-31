@@ -92,7 +92,7 @@ namespace excel2json {
             ExcelLoader excel = new ExcelLoader(excelPath, header);
 
             //-- export
-            JsonExporter exporter = new JsonExporter(excel, options.Lowcase, options.ExportArray, dateFormat);
+            JsonExporter exporter = new JsonExporter(excel, options.Lowcase, options.ExportArray, dateFormat, options.ForceSheetName);
             exporter.SaveToFile(exportPath, cd);
         }
     }
