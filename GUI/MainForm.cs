@@ -46,6 +46,7 @@ namespace excel2json.GUI {
             this.comboBoxLowcase.SelectedIndex = 1;
             this.comboBoxHeader.SelectedIndex = 1;
             this.comboBoxDateFormat.SelectedIndex = 0;
+            this.comboBoxSheetName.SelectedIndex = 1;
 
             this.comboBoxEncoding.Items.Clear();
             this.comboBoxEncoding.Items.Add("utf8-nobom");
@@ -126,6 +127,7 @@ namespace excel2json.GUI {
             options.Lowcase = this.comboBoxLowcase.SelectedIndex == 0;
             options.HeaderRows = int.Parse(this.comboBoxHeader.Text);
             options.DateFormat = this.comboBoxDateFormat.Text;
+            options.ForceSheetName = this.comboBoxSheetName.SelectedIndex == 0;
 
             //-- start import
             this.backgroundWorker.RunWorkerAsync(options);
