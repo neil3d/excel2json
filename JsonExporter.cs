@@ -95,7 +95,8 @@ namespace excel2json {
                     ID = string.Format("row_{0}", i);
 
                 var rowObject = convertRowToDict(sheet, row, lowcase, firstDataRow);
-                rowObject[ID] = ID;
+                // 多余的字段
+                // rowObject[ID] = ID;
                 importData[ID] = rowObject;
             }
 
