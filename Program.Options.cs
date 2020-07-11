@@ -2,13 +2,17 @@
 using CommandLine;
 using CommandLine.Text;
 
-namespace excel2json {
-    partial class Program {
+namespace excel2json
+{
+    partial class Program
+    {
         /// <summary>
         /// 命令行参数定义
         /// </summary>
-        internal sealed class Options {
-            public Options() {
+        internal sealed class Options
+        {
+            public Options()
+            {
                 this.HeaderRows = 3;
                 this.Encoding = "utf8-nobom";
                 this.Lowcase = false;
@@ -24,6 +28,12 @@ namespace excel2json {
 
             [Option('j', "json", Required = false, HelpText = "export json file path.")]
             public string JsonPath {
+                get;
+                set;
+            }
+
+            [Option('p', "csharp", Required = false, HelpText = "export C# data struct code file path.")]
+            public string CSharpPath {
                 get;
                 set;
             }
@@ -59,8 +69,7 @@ namespace excel2json {
             }
 
             [Option('s', "sheet", Required = false, DefaultValue = false, HelpText = "export with sheet name, even there's only one sheet.")]
-            public bool ForceSheetName
-            {
+            public bool ForceSheetName {
                 get;
                 set;
             }

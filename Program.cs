@@ -5,34 +5,41 @@ using System.Text;
 using System.Windows.Forms;
 
 
-namespace excel2json {
+namespace excel2json
+{
     /// <summary>
     /// 应用程序
     /// </summary>
-    sealed partial class Program {
+    sealed partial class Program
+    {
         /// <summary>
         /// 应用程序入口
         /// </summary>
         /// <param name="args">命令行参数</param>
         [STAThread]
-        static void Main(string[] args) {
-            if (args.Length <= 0) {
+        static void Main(string[] args)
+        {
+            if (args.Length <= 0)
+            {
                 //-- GUI MODE ----------------------------------------------------------
                 Console.WriteLine("Launch excel2json GUI Mode...");
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new GUI.MainForm());
             }
-            else {
+            else
+            {
                 //-- COMMAND LINE MODE -------------------------------------------------
 
                 //-- 分析命令行参数
                 var options = new Options();
                 var parser = new CommandLine.Parser(with => with.HelpWriter = Console.Error);
 
-                if (parser.ParseArgumentsStrict(args, options, () => Environment.Exit(-1))) {
+                if (parser.ParseArgumentsStrict(args, options, () => Environment.Exit(-1)))
+                {
                     //-- 执行导出操作
-                    try {
+                    try
+                    {
                         DateTime startTime = DateTime.Now;
                         Run(options);
                         //-- 程序计时
@@ -44,7 +51,8 @@ namespace excel2json {
                             dur.TotalMilliseconds)
                             );
                     }
-                    catch (Exception exp) {
+                    catch (Exception exp)
+                    {
                         Console.WriteLine("Error: " + exp.Message);
                     }
                 }
@@ -55,7 +63,8 @@ namespace excel2json {
         /// 根据命令行参数，执行Excel数据导出工作
         /// </summary>
         /// <param name="options">命令行参数</param>
-        private static void Run(Options options) {
+        private static void Run(Options options)
+        {
 
             //-- Excel File 
             string excelPath = options.ExcelPath;
@@ -66,10 +75,13 @@ namespace excel2json {
 
             //-- Encoding
             Encoding cd = new UTF8Encoding(false);
-            if (options.Encoding != "utf8-nobom") {
-                foreach (EncodingInfo ei in Encoding.GetEncodings()) {
+            if (options.Encoding != "utf8-nobom")
+            {
+                foreach (EncodingInfo ei in Encoding.GetEncodings())
+                {
                     Encoding e = ei.GetEncoding();
-                    if (e.HeaderName == options.Encoding) {
+                    if (e.HeaderName == options.Encoding)
+                    {
                         cd = e;
                         break;
                     }
@@ -81,10 +93,12 @@ namespace excel2json {
 
             //-- Export path
             string exportPath;
-            if (options.JsonPath != null && options.JsonPath.Length > 0) {
+            if (options.JsonPath != null && options.JsonPath.Length > 0)
+            {
                 exportPath = options.JsonPath;
             }
-            else {
+            else
+            {
                 exportPath = Path.ChangeExtension(excelPath, ".json");
             }
 
@@ -92,8 +106,15 @@ namespace excel2json {
             ExcelLoader excel = new ExcelLoader(excelPath, header);
 
             //-- export
-            JsonExporter exporter = new JsonExporter(excel, options.Lowcase, options.ExportArray, dateFormat, options.ForceSheetName);
+            JsonExporter exporter = new JsonExporter(excel, options.Lowcase, options.ExportArray, dateFormat, options.ForceSheetName, header);
             exporter.SaveToFile(exportPath, cd);
+
+            //-- 生成C#定义文件
+            if (options.CSharpPath != null && options.CSharpPath.Length > 0)
+            {
+                CSDefineGenerator generator = new CSDefineGenerator(excelName, excel);
+                generator.SaveToFile(options.CSharpPath, cd);
+            }
         }
     }
 }

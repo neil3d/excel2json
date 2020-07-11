@@ -44,9 +44,9 @@ namespace excel2json {
 
                 // Gets or sets a callback to determine whether to include the 
                 // current row in the DataTable.
-                FilterRow = (rowReader) => {
-                    return rowReader.Depth > headerRow - 1;
-                },
+                //FilterRow = (rowReader) => {
+                //    return rowReader.Depth > headerRow - 1;
+                //},
             };
 
             return new ExcelDataSetConfiguration() {
