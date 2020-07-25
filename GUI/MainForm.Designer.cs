@@ -49,6 +49,7 @@
             this.pictureBoxExcel = new System.Windows.Forms.PictureBox();
             this.labelExcelFile = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBoxExculdePrefix = new System.Windows.Forms.TextBox();
             this.comboBoxSheetName = new System.Windows.Forms.ComboBox();
             this.comboBoxDateFormat = new System.Windows.Forms.ComboBox();
             this.btnReimport = new System.Windows.Forms.Button();
@@ -60,7 +61,7 @@
             this.tabPageJSON = new System.Windows.Forms.TabPage();
             this.tabCSharp = new System.Windows.Forms.TabPage();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.textBoxExculdePrefix = new System.Windows.Forms.TextBox();
+            this.checkBoxCellJson = new System.Windows.Forms.CheckBox();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
@@ -86,7 +87,7 @@
             // 
             label2.Location = new System.Drawing.Point(6, 49);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(77, 12);
+            label2.Size = new System.Drawing.Size(102, 12);
             label2.TabIndex = 1;
             label2.Text = "Encoding:";
             label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -94,7 +95,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(6, 23);
+            label1.Location = new System.Drawing.Point(31, 23);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(77, 12);
             label1.TabIndex = 1;
@@ -105,7 +106,7 @@
             // 
             label4.Location = new System.Drawing.Point(6, 75);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(77, 12);
+            label4.Size = new System.Drawing.Size(102, 12);
             label4.TabIndex = 6;
             label4.Text = "Lowcase:";
             label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -114,7 +115,7 @@
             // 
             label3.Location = new System.Drawing.Point(6, 101);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(77, 12);
+            label3.Size = new System.Drawing.Size(102, 12);
             label3.TabIndex = 4;
             label3.Text = "Header:";
             label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -123,7 +124,7 @@
             // 
             label5.Location = new System.Drawing.Point(6, 127);
             label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(77, 12);
+            label5.Size = new System.Drawing.Size(102, 12);
             label5.TabIndex = 9;
             label5.Text = "Date Format:";
             label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -132,10 +133,19 @@
             // 
             label6.Location = new System.Drawing.Point(6, 153);
             label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(77, 12);
+            label6.Size = new System.Drawing.Size(102, 12);
             label6.TabIndex = 11;
             label6.Text = "SheetName:";
             label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label7
+            // 
+            label7.Location = new System.Drawing.Point(6, 179);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(102, 12);
+            label7.TabIndex = 13;
+            label7.Text = "ExculdePrefix:";
+            label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // statusStrip
             // 
@@ -268,7 +278,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControlCode);
             this.splitContainer1.Size = new System.Drawing.Size(784, 494);
-            this.splitContainer1.SplitterDistance = 261;
+            this.splitContainer1.SplitterDistance = 288;
             this.splitContainer1.TabIndex = 5;
             // 
             // flowLayoutPanel1
@@ -279,7 +289,7 @@
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(259, 492);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(286, 492);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // panelExcelDropBox
@@ -291,7 +301,7 @@
             this.panelExcelDropBox.Location = new System.Drawing.Point(8, 8);
             this.panelExcelDropBox.Margin = new System.Windows.Forms.Padding(8);
             this.panelExcelDropBox.Name = "panelExcelDropBox";
-            this.panelExcelDropBox.Size = new System.Drawing.Size(245, 212);
+            this.panelExcelDropBox.Size = new System.Drawing.Size(270, 176);
             this.panelExcelDropBox.TabIndex = 1;
             this.panelExcelDropBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.panelExcelDropBox_DragDrop);
             this.panelExcelDropBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.panelExcelDropBox_DragEnter);
@@ -304,7 +314,7 @@
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(243, 210);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(268, 174);
             this.flowLayoutPanel2.TabIndex = 0;
             // 
             // pictureBoxExcel
@@ -312,7 +322,7 @@
             this.pictureBoxExcel.Image = global::excel2json.Properties.Resources.excel_64;
             this.pictureBoxExcel.Location = new System.Drawing.Point(3, 3);
             this.pictureBoxExcel.Name = "pictureBoxExcel";
-            this.pictureBoxExcel.Size = new System.Drawing.Size(237, 100);
+            this.pictureBoxExcel.Size = new System.Drawing.Size(262, 130);
             this.pictureBoxExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBoxExcel.TabIndex = 0;
             this.pictureBoxExcel.TabStop = false;
@@ -320,17 +330,17 @@
             // labelExcelFile
             // 
             this.labelExcelFile.Font = new System.Drawing.Font("Microsoft YaHei", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelExcelFile.Location = new System.Drawing.Point(3, 106);
+            this.labelExcelFile.Location = new System.Drawing.Point(3, 136);
             this.labelExcelFile.Name = "labelExcelFile";
             this.labelExcelFile.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelExcelFile.Size = new System.Drawing.Size(237, 70);
+            this.labelExcelFile.Size = new System.Drawing.Size(260, 35);
             this.labelExcelFile.TabIndex = 1;
             this.labelExcelFile.Text = "Drop you .xlsx file here!";
             this.labelExcelFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox1
             // 
-            this.groupBox1.AutoSize = true;
+            this.groupBox1.Controls.Add(this.checkBoxCellJson);
             this.groupBox1.Controls.Add(this.textBoxExculdePrefix);
             this.groupBox1.Controls.Add(label7);
             this.groupBox1.Controls.Add(label6);
@@ -347,13 +357,20 @@
             this.groupBox1.Controls.Add(this.comboBoxEncoding);
             this.groupBox1.Controls.Add(this.comboBoxType);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(8, 236);
+            this.groupBox1.Location = new System.Drawing.Point(8, 200);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(245, 248);
+            this.groupBox1.Size = new System.Drawing.Size(270, 280);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Options";
+            // 
+            // textBoxExculdePrefix
+            // 
+            this.textBoxExculdePrefix.Location = new System.Drawing.Point(114, 180);
+            this.textBoxExculdePrefix.Name = "textBoxExculdePrefix";
+            this.textBoxExculdePrefix.Size = new System.Drawing.Size(150, 21);
+            this.textBoxExculdePrefix.TabIndex = 14;
             // 
             // comboBoxSheetName
             // 
@@ -363,7 +380,7 @@
             this.comboBoxSheetName.Items.AddRange(new object[] {
             "Yes",
             "No"});
-            this.comboBoxSheetName.Location = new System.Drawing.Point(89, 150);
+            this.comboBoxSheetName.Location = new System.Drawing.Point(114, 153);
             this.comboBoxSheetName.Name = "comboBoxSheetName";
             this.comboBoxSheetName.Size = new System.Drawing.Size(150, 20);
             this.comboBoxSheetName.TabIndex = 10;
@@ -376,7 +393,7 @@
             this.comboBoxDateFormat.Items.AddRange(new object[] {
             "yyyy/MM/dd",
             "yyyy/MM/dd hh:mm:ss"});
-            this.comboBoxDateFormat.Location = new System.Drawing.Point(89, 124);
+            this.comboBoxDateFormat.Location = new System.Drawing.Point(114, 127);
             this.comboBoxDateFormat.Name = "comboBoxDateFormat";
             this.comboBoxDateFormat.Size = new System.Drawing.Size(150, 20);
             this.comboBoxDateFormat.TabIndex = 8;
@@ -384,7 +401,7 @@
             // 
             // btnReimport
             // 
-            this.btnReimport.Location = new System.Drawing.Point(68, 205);
+            this.btnReimport.Location = new System.Drawing.Point(85, 238);
             this.btnReimport.Name = "btnReimport";
             this.btnReimport.Size = new System.Drawing.Size(75, 23);
             this.btnReimport.TabIndex = 7;
@@ -400,7 +417,7 @@
             this.comboBoxLowcase.Items.AddRange(new object[] {
             "Yes",
             "No"});
-            this.comboBoxLowcase.Location = new System.Drawing.Point(89, 72);
+            this.comboBoxLowcase.Location = new System.Drawing.Point(114, 75);
             this.comboBoxLowcase.Name = "comboBoxLowcase";
             this.comboBoxLowcase.Size = new System.Drawing.Size(150, 20);
             this.comboBoxLowcase.TabIndex = 5;
@@ -416,7 +433,7 @@
             "4",
             "5",
             "6"});
-            this.comboBoxHeader.Location = new System.Drawing.Point(89, 98);
+            this.comboBoxHeader.Location = new System.Drawing.Point(114, 101);
             this.comboBoxHeader.Name = "comboBoxHeader";
             this.comboBoxHeader.Size = new System.Drawing.Size(150, 20);
             this.comboBoxHeader.TabIndex = 3;
@@ -427,7 +444,7 @@
             this.comboBoxEncoding.DisplayMember = "0";
             this.comboBoxEncoding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxEncoding.FormattingEnabled = true;
-            this.comboBoxEncoding.Location = new System.Drawing.Point(89, 46);
+            this.comboBoxEncoding.Location = new System.Drawing.Point(114, 49);
             this.comboBoxEncoding.Name = "comboBoxEncoding";
             this.comboBoxEncoding.Size = new System.Drawing.Size(150, 20);
             this.comboBoxEncoding.TabIndex = 0;
@@ -441,7 +458,7 @@
             this.comboBoxType.Items.AddRange(new object[] {
             "Array",
             "Dict Object"});
-            this.comboBoxType.Location = new System.Drawing.Point(89, 20);
+            this.comboBoxType.Location = new System.Drawing.Point(114, 23);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(150, 20);
             this.comboBoxType.TabIndex = 0;
@@ -455,7 +472,7 @@
             this.tabControlCode.Location = new System.Drawing.Point(0, 0);
             this.tabControlCode.Name = "tabControlCode";
             this.tabControlCode.SelectedIndex = 0;
-            this.tabControlCode.Size = new System.Drawing.Size(517, 492);
+            this.tabControlCode.Size = new System.Drawing.Size(490, 492);
             this.tabControlCode.TabIndex = 0;
             // 
             // tabPageJSON
@@ -463,7 +480,7 @@
             this.tabPageJSON.Location = new System.Drawing.Point(4, 22);
             this.tabPageJSON.Name = "tabPageJSON";
             this.tabPageJSON.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageJSON.Size = new System.Drawing.Size(509, 466);
+            this.tabPageJSON.Size = new System.Drawing.Size(482, 466);
             this.tabPageJSON.TabIndex = 0;
             this.tabPageJSON.Text = "JSON";
             this.tabPageJSON.UseVisualStyleBackColor = true;
@@ -473,7 +490,7 @@
             this.tabCSharp.Location = new System.Drawing.Point(4, 22);
             this.tabCSharp.Name = "tabCSharp";
             this.tabCSharp.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCSharp.Size = new System.Drawing.Size(509, 466);
+            this.tabCSharp.Size = new System.Drawing.Size(482, 466);
             this.tabCSharp.TabIndex = 1;
             this.tabCSharp.Text = "C#";
             this.tabCSharp.UseVisualStyleBackColor = true;
@@ -483,21 +500,15 @@
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
             this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
-            // label7
+            // checkBoxCellJson
             // 
-            label7.Location = new System.Drawing.Point(6, 179);
-            label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(77, 12);
-            label7.TabIndex = 13;
-            label7.Text = "Exculde Prefix:";
-            label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // textBoxExculdePrefix
-            // 
-            this.textBoxExculdePrefix.Location = new System.Drawing.Point(89, 177);
-            this.textBoxExculdePrefix.Name = "textBoxExculdePrefix";
-            this.textBoxExculdePrefix.Size = new System.Drawing.Size(150, 21);
-            this.textBoxExculdePrefix.TabIndex = 14;
+            this.checkBoxCellJson.AutoSize = true;
+            this.checkBoxCellJson.Location = new System.Drawing.Point(54, 207);
+            this.checkBoxCellJson.Name = "checkBoxCellJson";
+            this.checkBoxCellJson.Size = new System.Drawing.Size(186, 16);
+            this.checkBoxCellJson.TabIndex = 15;
+            this.checkBoxCellJson.Text = "Convert Json String in Cell";
+            this.checkBoxCellJson.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -521,7 +532,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
             this.panelExcelDropBox.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxExcel)).EndInit();
@@ -564,5 +574,6 @@
         private System.Windows.Forms.ToolStripButton btnCopyCSharp;
         private System.Windows.Forms.ToolStripButton btnSaveCSharp;
         private System.Windows.Forms.TextBox textBoxExculdePrefix;
+        private System.Windows.Forms.CheckBox checkBoxCellJson;
     }
 }

@@ -12,6 +12,12 @@
 * -a 序列化成数组
 * -d, --date:指定日期格式化字符串，例如：dd / MM / yyy hh: mm:ss
 * -s 序列化时强制带上sheet name，即使只有一个sheet
+* -exclude_prefix： 导出时，排除掉包含指定前缀的表单和列，例如：-exclude_prefix #
+* -cell_json：自动识别单元格中的Json对象和Json数组，Default：false
 
-![COVER](https://neil3d.github.io/assets/img/excel2json/cover.jpg)  
+
+![Excel](./Docs/excel.png)  
+![GUI](./Docs/gui.png)  
+![CMd](./Docs/cmd.png)  
+
 

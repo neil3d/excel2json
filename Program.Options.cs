@@ -79,6 +79,12 @@ namespace excel2json
                 get;
                 set;
             }
+
+            [Option('l', "cell_json", Required = false, DefaultValue = false, HelpText = "convert json string in cell")]
+            public bool CellJson {
+                get;
+                set;
+            }
         }
     }
 }
