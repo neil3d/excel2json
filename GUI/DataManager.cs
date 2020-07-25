@@ -93,10 +93,10 @@ namespace excel2json.GUI
             ExcelLoader excel = new ExcelLoader(excelPath, header);
 
             //-- C# 结构体定义
-            mCSharp = new CSDefineGenerator(excelPath, excel);
+            mCSharp = new CSDefineGenerator(excelPath, excel, options.ExcludePrefix);
 
             //-- 导出JSON
-            mJson = new JsonExporter(excel, options.Lowcase, options.ExportArray, options.DateFormat, options.ForceSheetName, header);
+            mJson = new JsonExporter(excel, options.Lowcase, options.ExportArray, options.DateFormat, options.ForceSheetName, header, options.ExcludePrefix);
         }
     }
 }

@@ -25,13 +25,18 @@ namespace excel2json
         /// 构造函数：完成内部数据创建
         /// </summary>
         /// <param name="excel">ExcelLoader Object</param>
-        public JsonExporter(ExcelLoader excel, bool lowcase, bool exportArray, string dateFormat, bool forceSheetName, int headerRows)
+        public JsonExporter(ExcelLoader excel, bool lowcase, bool exportArray, string dateFormat, bool forceSheetName, int headerRows, string excludePrefix)
         {
             mHeaderRows = headerRows-1;
             List<DataTable> validSheets = new List<DataTable>();
             for (int i = 0; i < excel.Sheets.Count; i++)
             {
                 DataTable sheet = excel.Sheets[i];
+                
+                // 过滤掉包含特定前缀的表单
+                string sheetName = sheet.TableName;
+                if (excludePrefix.Length>0 && sheetName.StartsWith(excludePrefix))
+                    continue;
 
                 if (sheet.Columns.Count > 0 && sheet.Rows.Count > 0)
                     validSheets.Add(sheet);
@@ -47,7 +52,7 @@ namespace excel2json
             {   // single sheet
 
                 //-- convert to object
-                object sheetValue = convertSheet(validSheets[0], exportArray, lowcase);
+                object sheetValue = convertSheet(validSheets[0], exportArray, lowcase, excludePrefix);
 
                 //-- convert to json string
                 mContext = JsonConvert.SerializeObject(sheetValue, jsonSettings);
@@ -58,7 +63,7 @@ namespace excel2json
                 Dictionary<string, object> data = new Dictionary<string, object>();
                 foreach (var sheet in validSheets)
                 {
-                    object sheetValue = convertSheet(sheet, exportArray, lowcase);
+                    object sheetValue = convertSheet(sheet, exportArray, lowcase, excludePrefix);
                     data.Add(sheet.TableName, sheetValue);
                 }
 
@@ -67,15 +72,15 @@ namespace excel2json
             }
         }
 
-        private object convertSheet(DataTable sheet, bool exportArray, bool lowcase)
+        private object convertSheet(DataTable sheet, bool exportArray, bool lowcase, string excludePrefix)
         {
             if (exportArray)
-                return convertSheetToArray(sheet, lowcase);
+                return convertSheetToArray(sheet, lowcase, excludePrefix);
             else
-                return convertSheetToDict(sheet, lowcase);
+                return convertSheetToDict(sheet, lowcase, excludePrefix);
         }
 
-        private object convertSheetToArray(DataTable sheet, bool lowcase)
+        private object convertSheetToArray(DataTable sheet, bool lowcase, string excludePrefix)
         {
             List<object> values = new List<object>();
 
@@ -85,7 +90,7 @@ namespace excel2json
                 DataRow row = sheet.Rows[i];
 
                 values.Add(
-                    convertRowToDict(sheet, row, lowcase, firstDataRow)
+                    convertRowToDict(sheet, row, lowcase, firstDataRow, excludePrefix)
                     );
             }
 
@@ -95,7 +100,7 @@ namespace excel2json
         /// <summary>
         /// 以第一列为ID，转换成ID->Object的字典对象
         /// </summary>
-        private object convertSheetToDict(DataTable sheet, bool lowcase)
+        private object convertSheetToDict(DataTable sheet, bool lowcase, string excludePrefix)
         {
             Dictionary<string, object> importData =
                 new Dictionary<string, object>();
@@ -108,7 +113,7 @@ namespace excel2json
                 if (ID.Length <= 0)
                     ID = string.Format("row_{0}", i);
 
-                var rowObject = convertRowToDict(sheet, row, lowcase, firstDataRow);
+                var rowObject = convertRowToDict(sheet, row, lowcase, firstDataRow, excludePrefix);
                 // 多余的字段
                 // rowObject[ID] = ID;
                 importData[ID] = rowObject;
@@ -120,12 +125,17 @@ namespace excel2json
         /// <summary>
         /// 把一行数据转换成一个对象，每一列是一个属性
         /// </summary>
-        private Dictionary<string, object> convertRowToDict(DataTable sheet, DataRow row, bool lowcase, int firstDataRow)
+        private Dictionary<string, object> convertRowToDict(DataTable sheet, DataRow row, bool lowcase, int firstDataRow, string excludePrefix)
         {
             var rowData = new Dictionary<string, object>();
             int col = 0;
             foreach (DataColumn column in sheet.Columns)
             {
+                // 过滤掉包含指定前缀的列
+                string columnName = column.ToString();
+                if (excludePrefix.Length > 0 && columnName.StartsWith(excludePrefix))
+                    continue;
+
                 object value = row[column];
 
                 if (value.GetType() == typeof(System.DBNull))

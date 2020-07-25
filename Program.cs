@@ -106,13 +106,13 @@ namespace excel2json
             ExcelLoader excel = new ExcelLoader(excelPath, header);
 
             //-- export
-            JsonExporter exporter = new JsonExporter(excel, options.Lowcase, options.ExportArray, dateFormat, options.ForceSheetName, header);
+            JsonExporter exporter = new JsonExporter(excel, options.Lowcase, options.ExportArray, dateFormat, options.ForceSheetName, header, options.ExcludePrefix);
             exporter.SaveToFile(exportPath, cd);
 
             //-- 生成C#定义文件
             if (options.CSharpPath != null && options.CSharpPath.Length > 0)
             {
-                CSDefineGenerator generator = new CSDefineGenerator(excelName, excel);
+                CSDefineGenerator generator = new CSDefineGenerator(excelName, excel, options.ExcludePrefix);
                 generator.SaveToFile(options.CSharpPath, cd);
             }
         }

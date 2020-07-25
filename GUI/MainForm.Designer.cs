@@ -29,6 +29,7 @@
             System.Windows.Forms.Label label3;
             System.Windows.Forms.Label label5;
             System.Windows.Forms.Label label6;
+            System.Windows.Forms.Label label7;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -59,12 +60,14 @@
             this.tabPageJSON = new System.Windows.Forms.TabPage();
             this.tabCSharp = new System.Windows.Forms.TabPage();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.textBoxExculdePrefix = new System.Windows.Forms.TextBox();
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
+            label7 = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -328,6 +331,8 @@
             // groupBox1
             // 
             this.groupBox1.AutoSize = true;
+            this.groupBox1.Controls.Add(this.textBoxExculdePrefix);
+            this.groupBox1.Controls.Add(label7);
             this.groupBox1.Controls.Add(label6);
             this.groupBox1.Controls.Add(this.comboBoxSheetName);
             this.groupBox1.Controls.Add(label5);
@@ -345,7 +350,7 @@
             this.groupBox1.Location = new System.Drawing.Point(8, 236);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(245, 238);
+            this.groupBox1.Size = new System.Drawing.Size(245, 248);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Options";
@@ -379,7 +384,7 @@
             // 
             // btnReimport
             // 
-            this.btnReimport.Location = new System.Drawing.Point(68, 195);
+            this.btnReimport.Location = new System.Drawing.Point(68, 205);
             this.btnReimport.Name = "btnReimport";
             this.btnReimport.Size = new System.Drawing.Size(75, 23);
             this.btnReimport.TabIndex = 7;
@@ -478,6 +483,22 @@
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
             this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
+            // label7
+            // 
+            label7.Location = new System.Drawing.Point(6, 179);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(77, 12);
+            label7.TabIndex = 13;
+            label7.Text = "Exculde Prefix:";
+            label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // textBoxExculdePrefix
+            // 
+            this.textBoxExculdePrefix.Location = new System.Drawing.Point(89, 177);
+            this.textBoxExculdePrefix.Name = "textBoxExculdePrefix";
+            this.textBoxExculdePrefix.Size = new System.Drawing.Size(150, 21);
+            this.textBoxExculdePrefix.TabIndex = 14;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -542,5 +563,6 @@
         private System.Windows.Forms.TabPage tabCSharp;
         private System.Windows.Forms.ToolStripButton btnCopyCSharp;
         private System.Windows.Forms.ToolStripButton btnSaveCSharp;
+        private System.Windows.Forms.TextBox textBoxExculdePrefix;
     }
 }

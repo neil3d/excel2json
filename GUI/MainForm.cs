@@ -143,6 +143,7 @@ namespace excel2json.GUI
             options.HeaderRows = int.Parse(this.comboBoxHeader.Text);
             options.DateFormat = this.comboBoxDateFormat.Text;
             options.ForceSheetName = this.comboBoxSheetName.SelectedIndex == 0;
+            options.ExcludePrefix = this.textBoxExculdePrefix.Text;
 
             //-- start import
             this.backgroundWorker.RunWorkerAsync(options);

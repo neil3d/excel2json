@@ -27,7 +27,7 @@ namespace excel2json
             }
         }
 
-        public CSDefineGenerator(string excelName, ExcelLoader excel)
+        public CSDefineGenerator(string excelName, ExcelLoader excel, string excludePrefix)
         {
             //-- 创建代码字符串
             StringBuilder sb = new StringBuilder();
@@ -44,7 +44,7 @@ namespace excel2json
             for (int i = 0; i < excel.Sheets.Count; i++)
             {
                 DataTable sheet = excel.Sheets[i];
-                sb.Append(_exportSheet(sheet));
+                sb.Append(_exportSheet(sheet, excludePrefix));
             }
 
             sb.AppendLine();
@@ -53,9 +53,13 @@ namespace excel2json
             mCode = sb.ToString();
         }
 
-        private string _exportSheet(DataTable sheet)
+        private string _exportSheet(DataTable sheet, string excludePrefix)
         {
             if (sheet.Columns.Count < 0 || sheet.Rows.Count < 2)
+                return "";
+
+            string sheetName = sheet.TableName;
+            if (excludePrefix.Length > 0 && sheetName.StartsWith(excludePrefix))
                 return "";
 
             // get field list
@@ -65,6 +69,11 @@ namespace excel2json
 
             foreach (DataColumn column in sheet.Columns)
             {
+                // 过滤掉包含指定前缀的列
+                string columnName = column.ToString();
+                if (excludePrefix.Length > 0 && columnName.StartsWith(excludePrefix))
+                    continue;
+
                 FieldDef field;
                 field.name = column.ToString();
                 field.type = typeRow[column].ToString();
