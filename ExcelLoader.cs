@@ -13,7 +13,7 @@ namespace excel2json {
         // TODO: add Sheet Struct Define
 
         public ExcelLoader(string filePath, int headerRow) {
-            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read)) {
+            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
                 // Auto-detect format, supports:
                 //  - Binary Excel files (2.0-2003 format; *.xls)
                 //  - OpenXml Excel files (2007 format; *.xlsx)
