@@ -168,7 +168,7 @@ namespace excel2json
 
                 //全部转换为string
                 //方便LitJson.JsonMapper.ToObject<List<Dictionary<string, string>>>(textAsset.text)等使用方式 之后根据自己的需求进行解析
-                if (allString)
+                if (allString && !(value is string))
                 {
                     value = value.ToString();
                 }
