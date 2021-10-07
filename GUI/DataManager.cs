@@ -96,7 +96,7 @@ namespace excel2json.GUI
             mCSharp = new CSDefineGenerator(excelPath, excel, options.ExcludePrefix);
 
             //-- 导出JSON
-            mJson = new JsonExporter(excel, options.Lowcase, options.ExportArray, options.DateFormat, options.ForceSheetName, header, options.ExcludePrefix, options.CellJson);
+            mJson = new JsonExporter(excel, options.Lowcase, options.ExportArray, options.DateFormat, options.ForceSheetName, header, options.ExcludePrefix, options.CellJson, options.AllString);
         }
     }
 }

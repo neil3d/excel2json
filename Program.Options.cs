@@ -85,6 +85,13 @@ namespace excel2json
                 get;
                 set;
             }
+
+            [Option('l', "all_string", Required = false, DefaultValue = false, HelpText = "all string")]
+            public bool AllString
+            {
+                get;
+                set;
+            }
         }
     }
 }
